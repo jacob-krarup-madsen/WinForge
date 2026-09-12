@@ -44,7 +44,7 @@
                             <TextBlock Text="Disables telemetry, diagnostics tracking, background bloat services, and optimizes scheduling latency." 
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Run Optimizer" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Center" Click="OptimizeBtn_Click" />
+                        <Button x:Name="OptimizeBtn" Grid.Column="2" Content="Run Optimizer" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Center" Click="OptimizeBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -62,7 +62,7 @@
                             <TextBlock Text="Removes temporary app cache, Windows update leftovers, log dumps, and user temporary files." 
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Clean Disk" VerticalAlignment="Center" Click="CleanDiskBtn_Click" />
+                        <Button x:Name="CleanDiskBtn" Grid.Column="2" Content="Clean Disk" VerticalAlignment="Center" Click="CleanDiskBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -80,7 +80,7 @@
                             <TextBlock Text="Reclaims inactive RAM cache, clears modified pages, and minimizes active working sets." 
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Flush Memory" VerticalAlignment="Center" Click="FlushMemoryBtn_Click" />
+                        <Button x:Name="FlushMemoryBtn" Grid.Column="2" Content="Flush Memory" VerticalAlignment="Center" Click="FlushMemoryBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -98,7 +98,7 @@
                             <TextBlock Text="Audits current Windows security, privacy toggles, and performance benchmark status." 
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Run Audit" VerticalAlignment="Center" Click="AuditBtn_Click" />
+                        <Button x:Name="AuditBtn" Grid.Column="2" Content="Run Audit" VerticalAlignment="Center" Click="AuditBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -116,7 +116,7 @@
                             <TextBlock Text="Re-enables default Windows services, telemetry settings, and resets performance flags." 
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Restore Defaults" VerticalAlignment="Center" Click="UndoBtn_Click" />
+                        <Button x:Name="UndoBtn" Grid.Column="2" Content="Restore Defaults" VerticalAlignment="Center" Click="UndoBtn_Click" />
                     </Grid>
                 </Border>
             </Grid>

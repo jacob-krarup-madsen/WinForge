@@ -1,4 +1,4 @@
-'# Support
+# Support
 
 ## Getting Help
 - **Bug reports:** Open an issue with the `bug` label
@@ -10,4 +10,3 @@ We aim to respond within 7 days.
 
 ## Security Issues
 Do not open public issues for security vulnerabilities. Use GitHub Security Advisories (private).
-'

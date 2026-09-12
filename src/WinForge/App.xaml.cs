@@ -104,7 +104,7 @@ public partial class App : Application
         TryWriteCrashLog(FormatErrorDetails(e.Exception, e.Message));
 
         try { new ErrorWindow(e.Message, e.Exception?.ToString() ?? "No stack trace available.").Activate(); }
-        catch { _ = MessageBox(IntPtr.Zero, $"An unexpected application error occurred:\n\n{e.Message}\n\nStack Trace:\n{e.Exception}", "Winget Desktop - Application Error", 0x10); }
+        catch { _ = MessageBox(IntPtr.Zero, $"An unexpected application error occurred:\n\n{e.Message}\n\nStack Trace:\n{e.Exception}", "WinForge - Application Error", 0x10); }
     }
 
     public static string FormatLogDialogTitle(string packageName, object operation) => $"Activity Log: {packageName} ({operation})";
@@ -184,7 +184,7 @@ public class ErrorWindow : Window
 {
     public ErrorWindow(string errorMessage, string stackTrace)
     {
-        Title = "Winget Desktop - Application Error";
+        Title = "WinForge - Application Error";
         var grid = new Grid { Width = 550, Height = 350, Padding = new Thickness(24), RowDefinitions = { new RowDefinition { Height = GridLength.Auto }, new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }, new RowDefinition { Height = GridLength.Auto } } };
         var titleBlock = new TextBlock { Text = "An unexpected error occurred", FontSize = 18, FontWeight = Microsoft.UI.Text.FontWeights.Bold, Margin = new Thickness(0, 0, 0, 12), Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red) };
         Grid.SetRow(titleBlock, 0); grid.Children.Add(titleBlock);

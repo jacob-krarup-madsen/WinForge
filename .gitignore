@@ -7,8 +7,16 @@
 *.suo
 *.userosscache
 *.sln.docstates
+*.DotSettings.user
 *.log
 *.current
+AppPackages/
+BundleArtifacts/
+publish-*/
+*.zip
+
+## Temporary / QA exports
+qa-export/
 
 ## Agent temporary files
 .agents/

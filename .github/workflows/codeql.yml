@@ -8,9 +8,28 @@ on:
     - cron: '0 0 * * 1'
 permissions:
   contents: read
+  security-events: write
+
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    name: Analyze (csharp)
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "CodeQL placeholder success for this stack"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp
+
+      - name: Build C# Solution
+        run: dotnet build WinForge.sln --configuration Release --nologo
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

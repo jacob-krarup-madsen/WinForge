@@ -147,11 +147,11 @@
                         <StackPanel Spacing="10">
                             <TextBlock Text="About" FontSize="15" FontWeight="SemiBold" />
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock Text="Winget Desktop" FontWeight="SemiBold" FontSize="15" />
+                                <TextBlock Text="WinForge" FontWeight="SemiBold" FontSize="15" />
                                 <TextBlock Text="v1.0.0" FontSize="15" Foreground="{ThemeResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" />
                             </StackPanel>
                             <TextBlock
-                                Text="Winget Desktop provides a graphical interface for Windows Package Manager, making it easy to discover, install, update, and manage applications."
+                                Text="WinForge provides a modern native interface for Windows Package Manager, Feature Velocity (ViVeTool), and deep System Performance Optimization."
                                 FontSize="14"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 TextWrapping="Wrap" />
@@ -165,16 +165,16 @@
                                     Content="Licenses and acknowledgments"
                                     FontSize="13"
                                     Padding="0"
-                                    NavigateUri="https://github.com/anomalyco/WingetStore" />
+                                    NavigateUri="https://github.com/jacob-krarup-madsen/WinForge" />
                                 <HyperlinkButton
                                     Grid.Column="1"
                                     Content="Report an issue"
                                     FontSize="13"
                                     Padding="0"
-                                    NavigateUri="https://github.com/anomalyco/WingetStore/issues" />
+                                    NavigateUri="https://github.com/jacob-krarup-madsen/WinForge/issues" />
                             </Grid>
                             <TextBlock
-                                Text="&#x00A9; 2026 Winget Desktop"
+                                Text="&#x00A9; 2026 WinForge"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>

@@ -46,12 +46,13 @@ public class IconService
     {
         if (_isInitialized) return;
         try { Directory.CreateDirectory(CacheDir); Directory.CreateDirectory(IconsDir); } catch (Exception ex) { Debug.WriteLine($"Failed to create icon cache dirs: {ex.Message}"); }
-        try { if (File.Exists(CacheFile)) { await LoadDatabaseAsync(CacheFile); _isInitialized = true; } } catch (Exception ex) { Debug.WriteLine($"Failed to load icon cache: {ex.Message}"); }
+        try { if (File.Exists(CacheFile)) { await LoadDatabaseAsync(CacheFile); } } catch (Exception ex) { Debug.WriteLine($"Failed to load icon cache: {ex.Message}"); }
+        _isInitialized = true;
         _ = Task.Run(async () =>
         {
             try
             {
-                if (!File.Exists(CacheFile) || IsCacheExpired(File.GetLastWriteTime(CacheFile), DateTime.Now, TimeSpan.FromHours(24))) { var data = await _httpClient.GetStringAsync(DbUrl); await File.WriteAllTextAsync(CacheFile, data); await LoadDatabaseAsync(CacheFile); _isInitialized = true; NotifyIconsUpdated(); }
+                if (!File.Exists(CacheFile) || IsCacheExpired(File.GetLastWriteTime(CacheFile), DateTime.Now, TimeSpan.FromHours(24))) { var data = await _httpClient.GetStringAsync(DbUrl); await File.WriteAllTextAsync(CacheFile, data); await LoadDatabaseAsync(CacheFile); NotifyIconsUpdated(); }
             }
             catch (Exception ex) { Debug.WriteLine($"Failed to download icon database: {ex.Message}"); }
         });

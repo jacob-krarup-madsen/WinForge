@@ -1,20 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace WingetStore.Pages;
 
-public class UiFeatureItem
+public class UiFeatureItem : INotifyPropertyChanged
 {
+    private string _statusText = "Default";
+
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public string StatusText { get; set; } = "Default";
+
+    public string StatusText
+    {
+        get => _statusText;
+        set
+        {
+            if (_statusText != value)
+            {
+                _statusText = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusText)));
+            }
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 }
 
 public sealed partial class FeaturesPage : Page
@@ -84,47 +102,92 @@ public sealed partial class FeaturesPage : Page
         DisableBtn.IsEnabled = hasSelection;
     }
 
-    private void EnableBtn_Click(object sender, RoutedEventArgs e)
+    private async void EnableBtn_Click(object sender, RoutedEventArgs e)
     {
-        ExecuteViVeToolAction(true);
+        await ExecuteViVeToolActionAsync(true);
     }
 
-    private void DisableBtn_Click(object sender, RoutedEventArgs e)
+    private async void DisableBtn_Click(object sender, RoutedEventArgs e)
     {
-        ExecuteViVeToolAction(false);
+        await ExecuteViVeToolActionAsync(false);
     }
 
-    private void ExecuteViVeToolAction(bool enable)
+    private async Task ExecuteViVeToolActionAsync(bool enable)
     {
         var selected = FeaturesListView.SelectedItems.Cast<UiFeatureItem>().ToList();
         if (selected.Count == 0) return;
 
+        var vivePath = LocateViVeTool();
+        if (string.IsNullOrEmpty(vivePath) || !File.Exists(vivePath))
+        {
+            StatusInfoBar.Severity = InfoBarSeverity.Error;
+            StatusInfoBar.Title = "ViVeTool Not Found";
+            StatusInfoBar.Message = "ViVeTool.exe could not be found in tools/cli or PATH. Please ensure ViVeTool is installed.";
+            StatusInfoBar.IsOpen = true;
+            return;
+        }
+
         var action = enable ? "enabled" : "disabled";
         var count = selected.Count;
+        int successCount = 0;
+        int failCount = 0;
+
+        EnableBtn.IsEnabled = false;
+        DisableBtn.IsEnabled = false;
+        RefreshBtn.IsEnabled = false;
 
         try
         {
-            // ViVeTool executable location in tools/cli
-            var vivePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "..", "tools", "cli", "ViVeTool.exe");
-            if (File.Exists(vivePath))
+            foreach (var f in selected)
             {
-                foreach (var f in selected)
+                var verb = enable ? "/enable" : "/disable";
+                using var proc = Process.Start(new ProcessStartInfo
                 {
-                    var verb = enable ? "/enable" : "/disable";
-                    Process.Start(new ProcessStartInfo
+                    FileName = vivePath,
+                    Arguments = $"{verb} /id:{f.Id}",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                });
+
+                if (proc != null)
+                {
+                    await proc.WaitForExitAsync();
+                    if (proc.ExitCode == 0)
                     {
-                        FileName = vivePath,
-                        Arguments = $"{verb} /id:{f.Id}",
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    })?.WaitForExit();
-                    f.StatusText = enable ? "Enabled" : "Disabled";
+                        f.StatusText = enable ? "Enabled" : "Disabled";
+                        successCount++;
+                    }
+                    else
+                    {
+                        failCount++;
+                    }
+                }
+                else
+                {
+                    failCount++;
                 }
             }
 
-            StatusInfoBar.Severity = InfoBarSeverity.Success;
-            StatusInfoBar.Title = "Velocity Features Updated";
-            StatusInfoBar.Message = $"Successfully {action} {count} feature(s). A system restart may be required for some features.";
+            if (failCount == 0)
+            {
+                StatusInfoBar.Severity = InfoBarSeverity.Success;
+                StatusInfoBar.Title = "Velocity Features Updated";
+                StatusInfoBar.Message = $"Successfully {action} {successCount} feature(s). A system restart may be required for some features.";
+            }
+            else if (successCount > 0)
+            {
+                StatusInfoBar.Severity = InfoBarSeverity.Warning;
+                StatusInfoBar.Title = "Velocity Features Partially Updated";
+                StatusInfoBar.Message = $"{action} {successCount} feature(s), but {failCount} failed. Running as Administrator may be required.";
+            }
+            else
+            {
+                StatusInfoBar.Severity = InfoBarSeverity.Error;
+                StatusInfoBar.Title = "Operation Failed";
+                StatusInfoBar.Message = $"Failed to execute ViVeTool on {failCount} feature(s). Ensure the application is running as Administrator.";
+            }
             StatusInfoBar.IsOpen = true;
         }
         catch (Exception ex)
@@ -134,6 +197,41 @@ public sealed partial class FeaturesPage : Page
             StatusInfoBar.Message = ex.Message;
             StatusInfoBar.IsOpen = true;
         }
+        finally
+        {
+            var hasSelection = FeaturesListView.SelectedItems.Count > 0;
+            EnableBtn.IsEnabled = hasSelection;
+            DisableBtn.IsEnabled = hasSelection;
+            RefreshBtn.IsEnabled = true;
+        }
+    }
+
+    private static string? LocateViVeTool()
+    {
+        var baseDir = AppContext.BaseDirectory;
+
+        // 1. Direct candidate next to binary
+        var direct = Path.Combine(baseDir, "ViVeTool.exe");
+        if (File.Exists(direct)) return direct;
+        var directLower = Path.Combine(baseDir, "vivetool.exe");
+        if (File.Exists(directLower)) return directLower;
+
+        // 2. Probe parent directories up to repo root
+        var dir = baseDir;
+        for (int i = 0; i < 7 && !string.IsNullOrEmpty(dir); i++)
+        {
+            var candidate = Path.Combine(dir, "tools", "cli", "ViVeTool.exe");
+            if (File.Exists(candidate)) return candidate;
+            var candidateLower = Path.Combine(dir, "tools", "cli", "vivetool.exe");
+            if (File.Exists(candidateLower)) return candidateLower;
+
+            var parent = Directory.GetParent(dir);
+            dir = parent?.FullName;
+        }
+
+        // 3. Fallback to ViVeToolLocator (PATH and standard paths)
+        var locator = new ViVeToolApp.Services.ViVeToolLocator();
+        return locator.LocateViVeTool();
     }
 
     private void RefreshBtn_Click(object sender, RoutedEventArgs e)
