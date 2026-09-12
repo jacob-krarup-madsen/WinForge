@@ -14,7 +14,8 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      - run: dotnet build WinForge.sln --configuration Release --nologo
-        continue-on-error: true
-      - run: dotnet test --if-present
-        continue-on-error: true
+      - name: Build Solution
+        run: dotnet build WinForge.sln --configuration Release --nologo
+
+      - name: Run Tests
+        run: dotnet test WinForge.sln --configuration Release --no-build --nologo

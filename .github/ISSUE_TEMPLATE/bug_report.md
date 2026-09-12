@@ -1,19 +1,28 @@
 ---
 name: Bug report
-about: LaTeX kompilerer ikke / CI rød
+about: Create a report to help improve WinForge
 labels: bug
 ---
 
-**Hvad sker der?**
-`make pdf` → `main.log` linje `!` / `Missing number` / `Citation.*undefined`
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-**Repro:**
-```bash
-make clean && make pdf
-grep -n "^!" main.log
-```
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Open WinForge
+2. Go to '...'
+3. Click on '...'
+4. See error
 
-**Forventet:** `0` `!`, `CI` grøn
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
-**Miljø:** TeX Live `2026` / Overleaf / `latexmk -v`
+**Environment:**
+- OS: Windows 10 / Windows 11 (build number: e.g., 26100)
+- WinForge Version: (e.g., v1.0.0)
+- Winget Version: (run `winget --version`)
+- Running as Administrator: Yes / No
+
+**Additional context**
+Add any other context, logs from `%LOCALAPPDATA%\WingetStore\logs\app.log`, or screenshots.
 

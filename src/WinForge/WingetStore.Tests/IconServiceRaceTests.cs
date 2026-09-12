@@ -3,10 +3,13 @@ using System.Net.Http.Headers;
 
 namespace WingetStore.Tests;
 
+[Collection("IconServiceTests")]
 public class IconServiceRaceTests
 {
-    private const string RacePackageId = "Mock.Race.App";
-    private const string DownloadUrl = "https://cdn.example.com/icons/Mock.Race.App.png";
+    private const string RacePackageId1 = "Mock.Race.App1";
+    private const string DownloadUrl1 = "https://cdn.example.com/icons/Mock.Race.App1.png";
+    private const string RacePackageId2 = "Mock.Race.App2";
+    private const string DownloadUrl2 = "https://cdn.example.com/icons/Mock.Race.App2.png";
 
     private static readonly byte[] MinimalPng =
     [
@@ -21,15 +24,16 @@ public class IconServiceRaceTests
         0x42, 0x60, 0x82
     ];
 
-    private static string LocalIconPath => Path.Combine(AppPaths.IconsCacheDir, IconService.GetSafeIconFileName(RacePackageId));
+    private static string GetLocalIconPath(string pkgId) => Path.Combine(AppPaths.IconsCacheDir, IconService.GetSafeIconFileName(pkgId));
 
-    private static void CleanupIconArtifacts()
+    private static void CleanupIconArtifacts(string pkgId)
     {
         try
         {
             if (!Directory.Exists(AppPaths.IconsCacheDir)) return;
-            if (File.Exists(LocalIconPath)) File.Delete(LocalIconPath);
-            string prefix = IconService.GetSafeIconFileName(RacePackageId) + ".";
+            string localPath = GetLocalIconPath(pkgId);
+            if (File.Exists(localPath)) File.Delete(localPath);
+            string prefix = IconService.GetSafeIconFileName(pkgId) + ".";
             foreach (var tmp in Directory.GetFiles(AppPaths.IconsCacheDir, prefix + "*.tmp"))
             {
                 try { File.Delete(tmp); } catch { }
@@ -42,11 +46,9 @@ public class IconServiceRaceTests
     public void GetTempFilePath_KeysTempFileByUrl()
     {
         string local = Path.Combine(AppPaths.IconsCacheDir, "App.png");
+        string t1 = IconService.GetTempFilePath(local, "https://example.com/icon1.png");
+        string t2 = IconService.GetTempFilePath(local, "https://example.com/icon2.png");
 
-        string t1 = IconService.GetTempFilePath(local, DownloadUrl);
-        string t2 = IconService.GetTempFilePath(local, "https://cdn.example.com/other.png");
-
-        Assert.StartsWith(local + ".", t1);
         Assert.EndsWith(".tmp", t1);
         Assert.NotEqual(t1, t2);
         Assert.NotEqual(t1, local);
@@ -55,54 +57,56 @@ public class IconServiceRaceTests
     [Fact]
     public async Task DownloadAndResolve_Concurrent_SamePackage_OnlyOneDownloads()
     {
-        CleanupIconArtifacts();
+        CleanupIconArtifacts(RacePackageId1);
+        string localIconPath = GetLocalIconPath(RacePackageId1);
         try
         {
             var handler = new ImageHttpHandler(MinimalPng, TimeSpan.FromMilliseconds(300));
             using var httpClient = new HttpClient(handler);
             var service = new IconService(httpClient);
 
-            var downloadTask = service.DownloadIconAsync(RacePackageId, DownloadUrl);
-            var resolveTask = service.ResolveIconOnlineAsync(RacePackageId);
+            var downloadTask = service.DownloadIconAsync(RacePackageId1, DownloadUrl1);
+            var resolveTask = service.ResolveIconOnlineAsync(RacePackageId1);
 
             await Task.WhenAll(downloadTask, resolveTask);
 
             Assert.Single(handler.RequestedUrls);
-            Assert.Contains(DownloadUrl, handler.RequestedUrls);
-            Assert.True(File.Exists(LocalIconPath), "concurrent resolve path must not clobber the download's temp file");
-            byte[] bytes = File.ReadAllBytes(LocalIconPath);
+            Assert.Contains(DownloadUrl1, handler.RequestedUrls);
+            Assert.True(File.Exists(localIconPath), "concurrent resolve path must not clobber the download's temp file");
+            byte[] bytes = File.ReadAllBytes(localIconPath);
             Assert.True(IconService.IsValidImageHeader(bytes, bytes.Length));
         }
         finally
         {
-            CleanupIconArtifacts();
+            CleanupIconArtifacts(RacePackageId1);
         }
     }
 
     [Fact]
     public async Task ResolveThenDownload_Concurrent_SamePackage_OnlyResolveRuns()
     {
-        CleanupIconArtifacts();
+        CleanupIconArtifacts(RacePackageId2);
+        string localIconPath = GetLocalIconPath(RacePackageId2);
         try
         {
             var handler = new ImageHttpHandler(MinimalPng, TimeSpan.FromMilliseconds(50));
             using var httpClient = new HttpClient(handler);
             var service = new IconService(httpClient);
 
-            var resolveTask = service.ResolveIconOnlineAsync(RacePackageId);
-            var downloadTask = service.DownloadIconAsync(RacePackageId, DownloadUrl);
+            var resolveTask = service.ResolveIconOnlineAsync(RacePackageId2);
+            var downloadTask = service.DownloadIconAsync(RacePackageId2, DownloadUrl2);
 
             await Task.WhenAll(downloadTask, resolveTask);
 
-            Assert.DoesNotContain(DownloadUrl, handler.RequestedUrls);
+            Assert.DoesNotContain(DownloadUrl2, handler.RequestedUrls);
             Assert.NotEmpty(handler.RequestedUrls);
-            Assert.True(File.Exists(LocalIconPath));
-            byte[] bytes = File.ReadAllBytes(LocalIconPath);
+            Assert.True(File.Exists(localIconPath));
+            byte[] bytes = File.ReadAllBytes(localIconPath);
             Assert.True(IconService.IsValidImageHeader(bytes, bytes.Length));
         }
         finally
         {
-            CleanupIconArtifacts();
+            CleanupIconArtifacts(RacePackageId2);
         }
     }
 

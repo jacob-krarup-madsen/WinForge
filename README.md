@@ -1,62 +1,57 @@
 # WinForge
 
-[![CI](https://github.com/dismount8645/WinForge/actions/workflows/ci.yml/badge.svg)](https://github.com/dismount8645/WinForge/actions/workflows/ci.yml)
+[![CI](https://github.com/jacob-krarup-madsen/WinForge/actions/workflows/ci.yml/badge.svg)](https://github.com/jacob-krarup-madsen/WinForge/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/jacob-krarup-madsen/WinForge/actions/workflows/codeql.yml/badge.svg)](https://github.com/jacob-krarup-madsen/WinForge/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![WinUI 3](https://img.shields.io/badge/WinUI%203-Windows%20App%20SDK%202.3-blue.svg)](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/)
 [![.NET 9](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
 
-**WinForge** — 100% native **WinUI 3 (Windows App SDK)** PowerTools Suite unifying package management, feature velocity, and system optimization.
+**WinForge** is a 100% native **WinUI 3 (Windows App SDK)** PowerTools Suite unifying Windows package management, feature velocity control, and system optimization into a single, high-performance desktop interface.
 
 ## Features
 
-- **Winget Package Store:** Browse curated software, one-click install, batch updates, uninstall via \winget\
-- **Feature Velocity Manager:** Discover, enable/disable Windows 11 velocity flags (integrated ViVeTool runner + offline catalog)
-- **System Optimizer:** Telemetry debloat, cache/disk cleaner, RAM working-set flusher, privacy audit with restore
+- **Winget Package Store:** Browse curated applications, search the global winget repository, one-click install, batch upgrades, and uninstalls.
+- **Feature Velocity Manager:** Discover, search, and enable or disable Windows 11 velocity feature flags with integrated ViVeTool support and offline catalog.
+- **System Optimizer:** Telemetry debloat, cache and disk cleaner, memory working-set flusher, privacy audit, and restore point integration.
 
 ## Tech Stack
 
-- **Language:** C# 12, .NET 9
-- **UI:** WinUI 3, Windows App SDK 2.3.1, CommunityToolkit.Mvvm, Mica backdrop, Fluent Design
-- **Tools:** ViVeTool, winget, PowerShell optimizer scripts in \	ools/cli\
+- **Language & Runtime:** C# 12, .NET 9 (`net9.0-windows10.0.26100.0`)
+- **UI Framework:** WinUI 3, Windows App SDK 2.3.1, CommunityToolkit.Mvvm, Mica backdrop, Fluent Design System
+- **CLI & Automation:** Windows Package Manager (`winget`), ViVeTool CLI, PowerShell 7/5.1 engine
 
 ## Project Structure
 
-``text
+```text
 WinForge/
-├── README.md
-├── LICENSE
-├── .github/
-├── WinForge.sln
+├── .github/                  # GitHub Actions (CI, CodeQL, Release, Stale), issue & PR templates
+├── docs/                     # Architecture and technical documentation
 ├── src/
-│   └── WinForge/             # WinUI 3 app (Pages: Home, Installed, Updates, Features, Optimizer, Settings)
+│   └── WinForge/             # Native WinUI 3 application & xUnit test suite (730+ tests)
+│       └── WingetStore.Tests/
 └── tools/
-    └── cli/                  # ViVeTool + optimizer scripts (FeatureCatalog.json, ViVeTool.exe, etc.)
-``
+    └── cli/                  # ViVeTool, feature catalogs, and PowerShell optimizer suite
+```
 
 ## Quick Start
 
-``bash
-git clone https://github.com/dismount8645/WinForge.git
+```bash
+git clone https://github.com/jacob-krarup-madsen/WinForge.git
 cd WinForge
-dotnet build WinForge.sln -p:Platform=x64 -c Release
-# Run from Visual Studio or:
+dotnet build WinForge.sln -c Release
+dotnet test WinForge.sln
+```
+
+Run the application directly:
+```bash
 dotnet run --project src/WinForge --framework net9.0-windows10.0.26100.0
-``
-
-## Usage
-
-Launch the app — use sidebar navigation: **Discover** (store), **Installed**, **Updates**, **Features** (velocity), **Optimizer**, **Settings**.
-
-## Development
-
-- Requires Visual Studio 2022 17.8+ with Windows App SDK
-- Build: \dotnet build\ — 0 warnings with \TreatWarningsAsErrors\
+```
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) and review our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## License
 
-[MIT](LICENSE) © 2026 dismount8645 (dismount8645)
+[MIT](LICENSE) © 2026 Jacob Krarup Madsen
 

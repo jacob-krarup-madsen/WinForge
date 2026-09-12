@@ -20,7 +20,7 @@ Open **PowerShell as Administrator** and run:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
-cd C:\Tools\vivetool_feature_enabler
+cd tools\cli
 
 # 1. Dry run first (no changes made)
 .\Enable-Features.ps1 -WhatIf

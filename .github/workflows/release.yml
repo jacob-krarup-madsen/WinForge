@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag (e.g., v0.1.0)'
+        description: 'Version tag (e.g., v1.0.0)'
         required: false
-        default: 'v0.1.0'
+        default: 'v1.0.0'
 
 permissions:
   contents: write
@@ -16,12 +16,28 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Create Release
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Publish WinForge (win-x64)
+        run: |
+          dotnet publish src\WinForge\WinForge.csproj -c Release -r win-x64 --self-contained true -o ./publish-win-x64 /p:PublishSingleFile=false /p:PublishReadyToRun=true
+
+      - name: Archive Release Artifacts
+        run: |
+          Compress-Archive -Path ./publish-win-x64/* -DestinationPath ./WinForge-win-x64.zip
+
+      - name: Create Release and Upload Asset
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           tag_name: ${{ inputs.version || github.ref_name }}
           name: Release ${{ inputs.version || github.ref_name }}
+          files: WinForge-win-x64.zip

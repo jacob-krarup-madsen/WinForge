@@ -1,14 +1,22 @@
 ---
 name: Feature request
-about: Ny skabelon-feature (tcolorbox, listings-sprog, kapitel)
+about: Suggest an idea or enhancement for WinForge
 labels: enhancement
 ---
 
-**Forslag:**
-<!-- F.eks. `glossaries` aktivering, `pdfx` PDF/A, nyt `listings` sprog -->
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Begrundelse (AAU korpus %):**
-<!-- Hvor mange % af 127 specialer ville bruge dette? -->
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen. Which area does this apply to?
+- [ ] Package Store & Management (winget)
+- [ ] Feature Velocity Manager (ViVeTool)
+- [ ] System Optimizer (Debloat, Clean, Tweaks)
+- [ ] UI / Fluent Design / Accessibility
 
-**Alternativ:**
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+Add any other context or screenshots about the feature request here.
 

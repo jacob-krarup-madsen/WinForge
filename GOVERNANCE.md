@@ -1,14 +1,14 @@
 # Governance
 
-This project is maintained by **@dismount8645** (Jacob Krarup Madsen).
+This project is maintained by **@jacob-krarup-madsen** (Jacob Krarup Madsen).
 
 ## Decision Making
-- All changes via Pull Request, 1 approving review required
-- Linear history, conversation resolution required
-- Releases via * tags, protected
+- All changes via Pull Request with passing CI checks
+- Releases via signed `v*` git tags
+- Linear git commit history preferred
 
 ## Roles
-- **Maintainer:** @dismount8645 — final review, releases, packages (GHCR)
+- **Project Lead & Maintainer:** @jacob-krarup-madsen — architecture, review, releases, and security advisories
 
 ## Contact
-Open a GitHub Discussion or Security Advisory for governance questions.
+Open a GitHub Discussion or submit a GitHub Security Advisory for governance queries.

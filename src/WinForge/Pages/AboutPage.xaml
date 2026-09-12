@@ -36,12 +36,12 @@
                         </Border>
                         
                         <StackPanel Spacing="4" HorizontalAlignment="Center">
-                            <TextBlock Text="Winget Desktop" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="WinForge" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" />
                             <TextBlock Text="Version 1.0.0" FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
                         </StackPanel>
 
                         <TextBlock
-                            Text="A fast, native, and modern Windows storefront built on top of the Windows Package Manager (Winget). Built to provide a clean and intuitive user interface for managing apps on Windows 10 and 11."
+                            Text="A fast, native, and modern Windows PowerTools suite combining a full-featured Package Manager Storefront, Windows Feature Velocity Management (ViVeTool), and deep System Performance Optimization."
                             FontSize="13"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             TextAlignment="Center"
@@ -58,7 +58,7 @@
                     <StackPanel Spacing="12">
                         <TextBlock Text="Project Details" FontSize="15" FontWeight="SemiBold" />
                         <TextBlock Text="• Native WinUI 3 (Windows App SDK 2.3.1)" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock Text="• Targets .NET 10 Windows Runtime" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="• Targets .NET 9 Windows Runtime" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <TextBlock Text="• Asynchronous background process pipe architecture" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <TextBlock Text="• Built in collaboration with Antigravity AI pair programming" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     </StackPanel>

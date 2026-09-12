@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,9 +10,46 @@ namespace WingetStore.Pages;
 
 public sealed partial class OptimizerPage : Page
 {
+    private bool _isRunning;
+
     public OptimizerPage()
     {
         InitializeComponent();
+        Loaded += OptimizerPage_Loaded;
+    }
+
+    private void OptimizerPage_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (!IsAdministrator())
+        {
+            OptInfoBar.Severity = InfoBarSeverity.Warning;
+            OptInfoBar.Title = "Elevation Notice";
+            OptInfoBar.Message = "WinForge is running without administrative privileges. System optimizations and service modifications require running as Administrator.";
+            OptInfoBar.IsOpen = true;
+        }
+    }
+
+    private static bool IsAdministrator()
+    {
+        try
+        {
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private void SetActionButtonsEnabled(bool enabled)
+    {
+        OptimizeBtn.IsEnabled = enabled;
+        CleanDiskBtn.IsEnabled = enabled;
+        FlushMemoryBtn.IsEnabled = enabled;
+        AuditBtn.IsEnabled = enabled;
+        UndoBtn.IsEnabled = enabled;
     }
 
     private void OptimizeBtn_Click(object sender, RoutedEventArgs e)
@@ -39,25 +77,48 @@ public sealed partial class OptimizerPage : Page
         _ = RunScriptAsync("Undo-Optimization.ps1", "Restore Defaults");
     }
 
+    private static string? LocateScript(string scriptName)
+    {
+        var baseDir = AppContext.BaseDirectory;
+        for (int i = 0; i < 7 && !string.IsNullOrEmpty(baseDir); i++)
+        {
+            var corePath = Path.Combine(baseDir, "tools", "cli", "optimizer", "Core", scriptName);
+            if (File.Exists(corePath)) return corePath;
+
+            var optPath = Path.Combine(baseDir, "tools", "cli", "optimizer", scriptName);
+            if (File.Exists(optPath)) return optPath;
+
+            var directCore = Path.Combine(baseDir, "Core", scriptName);
+            if (File.Exists(directCore)) return directCore;
+
+            var direct = Path.Combine(baseDir, scriptName);
+            if (File.Exists(direct)) return direct;
+
+            var parent = Directory.GetParent(baseDir);
+            baseDir = parent?.FullName;
+        }
+        return null;
+    }
+
     private async Task RunScriptAsync(string scriptName, string taskTitle)
     {
+        if (_isRunning) return;
+
+        _isRunning = true;
+        SetActionButtonsEnabled(false);
         OptInfoBar.IsOpen = false;
         ConsoleOutputBox.Text = $"Starting {taskTitle} ({scriptName})...\n";
 
-        var scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "..", "tools", "cli", "optimizer", "Core", scriptName);
+        var scriptPath = LocateScript(scriptName);
 
-        if (!File.Exists(scriptPath))
+        if (string.IsNullOrEmpty(scriptPath) || !File.Exists(scriptPath))
         {
-            // Fallback check in tools/cli/optimizer
-            scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "..", "tools", "cli", "optimizer", scriptName);
-        }
-
-        if (!File.Exists(scriptPath))
-        {
-            OptInfoBar.Severity = InfoBarSeverity.Warning;
-            OptInfoBar.Title = "Script Location";
-            OptInfoBar.Message = $"PowerShell script '{scriptName}' is ready in the tools/cli/optimizer suite.";
+            OptInfoBar.Severity = InfoBarSeverity.Error;
+            OptInfoBar.Title = "Script Not Found";
+            OptInfoBar.Message = $"PowerShell script '{scriptName}' could not be located in tools/cli/optimizer/Core.";
             OptInfoBar.IsOpen = true;
+            _isRunning = false;
+            SetActionButtonsEnabled(true);
             return;
         }
 
@@ -98,6 +159,11 @@ public sealed partial class OptimizerPage : Page
             OptInfoBar.Title = "Execution Error";
             OptInfoBar.Message = ex.Message;
             OptInfoBar.IsOpen = true;
+        }
+        finally
+        {
+            _isRunning = false;
+            SetActionButtonsEnabled(true);
         }
     }
 }

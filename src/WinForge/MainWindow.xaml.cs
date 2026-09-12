@@ -120,7 +120,7 @@ public sealed partial class MainWindow : Window
         {
             new TextBlock
             {
-                Text = "Winget Desktop v1.0.0",
+                Text = "WinForge v1.0.0",
                 VerticalAlignment = VerticalAlignment.Center,
                 Foreground = (Microsoft.UI.Xaml.Media.Brush)Application.Current.Resources["TextFillColorDisabledBrush"],
                 FontSize = 11
