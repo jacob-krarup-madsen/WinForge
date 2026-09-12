@@ -1,0 +1,969 @@
+[
+  {
+    "Id": "61161244",
+    "FeatureID": "61161244",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61161244 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "61754985",
+    "FeatureID": "61754985",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61754985 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "62762248",
+    "FeatureID": "62762248",
+    "Channels": [
+      "GA2026"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 62762248 (Channels: GA2026)"
+  },
+  {
+    "Id": "59213768",
+    "FeatureID": "59213768",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59213768 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "60813048",
+    "FeatureID": "60813048",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60813048 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "61090762",
+    "FeatureID": "61090762",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61090762 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "59728252",
+    "FeatureID": "59728252",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59728252 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "27829265",
+    "FeatureID": "27829265",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 27829265 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "61457898",
+    "FeatureID": "61457898",
+    "Channels": [
+      "GA2026"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61457898 (Channels: GA2026)"
+  },
+  {
+    "Id": "61160789",
+    "FeatureID": "61160789",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61160789 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "58989177",
+    "FeatureID": "58989177",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58989177 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "58989092",
+    "FeatureID": "58989092",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58989092 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "60716524",
+    "FeatureID": "60716524",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60716524 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "48433719",
+    "FeatureID": "48433719",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 48433719 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "61391826",
+    "FeatureID": "61391826",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61391826 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "58989070",
+    "FeatureID": "58989070",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58989070 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "58989021",
+    "FeatureID": "58989021",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58989021 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "58989002",
+    "FeatureID": "58989002",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58989002 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "57741219",
+    "FeatureID": "57741219",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57741219 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "55994763",
+    "FeatureID": "55994763",
+    "Channels": [
+      "GA2026",
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 55994763 (Channels: GA2026, 25H2)"
+  },
+  {
+    "Id": "58988972",
+    "FeatureID": "58988972",
+    "Channels": [
+      "GA2026",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58988972 (Channels: GA2026, 26H2)"
+  },
+  {
+    "Id": "57048237",
+    "FeatureID": "57048237",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57048237 (Channels: GA2025)"
+  },
+  {
+    "Id": "59162732",
+    "FeatureID": "59162732",
+    "Channels": [
+      "GA2025",
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59162732 (Channels: GA2025, 25H2)"
+  },
+  {
+    "Id": "41356296",
+    "FeatureID": "41356296",
+    "Channels": [
+      "GA2025",
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 41356296 (Channels: GA2025, 25H2)"
+  },
+  {
+    "Id": "45690266",
+    "FeatureID": "45690266",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 45690266 (Channels: GA2025)"
+  },
+  {
+    "Id": "59265307",
+    "FeatureID": "59265307",
+    "Channels": [
+      "GA2025",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59265307 (Channels: GA2025, 26H2)"
+  },
+  {
+    "Id": "57882334",
+    "FeatureID": "57882334",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57882334 (Channels: GA2025)"
+  },
+  {
+    "Id": "53343270",
+    "FeatureID": "53343270",
+    "Channels": [
+      "GA2025",
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 53343270 (Channels: GA2025, 26H2)"
+  },
+  {
+    "Id": "57048231",
+    "FeatureID": "57048231",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57048231 (Channels: GA2025)"
+  },
+  {
+    "Id": "47205210",
+    "FeatureID": "47205210",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 47205210 (Channels: GA2025)"
+  },
+  {
+    "Id": "57048226",
+    "FeatureID": "57048226",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57048226 (Channels: GA2025)"
+  },
+  {
+    "Id": "57048218",
+    "FeatureID": "57048218",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57048218 (Channels: GA2025)"
+  },
+  {
+    "Id": "57048216",
+    "FeatureID": "57048216",
+    "Channels": [
+      "GA2025"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57048216 (Channels: GA2025)"
+  },
+  {
+    "Id": "62141177",
+    "FeatureID": "62141177",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 62141177 (Channels: 26H2)"
+  },
+  {
+    "Id": "62068874",
+    "FeatureID": "62068874",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 62068874 (Channels: 26H2)"
+  },
+  {
+    "Id": "63194003",
+    "FeatureID": "63194003",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 63194003 (Channels: 26H2)"
+  },
+  {
+    "Id": "62915050",
+    "FeatureID": "62915050",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 62915050 (Channels: 26H2)"
+  },
+  {
+    "Id": "61483244",
+    "FeatureID": "61483244",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61483244 (Channels: 26H2)"
+  },
+  {
+    "Id": "60490208",
+    "FeatureID": "60490208",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60490208 (Channels: 26H2)"
+  },
+  {
+    "Id": "60730253",
+    "FeatureID": "60730253",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60730253 (Channels: 26H2)"
+  },
+  {
+    "Id": "61384404",
+    "FeatureID": "61384404",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61384404 (Channels: 26H2)"
+  },
+  {
+    "Id": "60414189",
+    "FeatureID": "60414189",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60414189 (Channels: 26H2)"
+  },
+  {
+    "Id": "61161268",
+    "FeatureID": "61161268",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61161268 (Channels: 26H2)"
+  },
+  {
+    "Id": "61161304",
+    "FeatureID": "61161304",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61161304 (Channels: 26H2)"
+  },
+  {
+    "Id": "61161283",
+    "FeatureID": "61161283",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61161283 (Channels: 26H2)"
+  },
+  {
+    "Id": "61441697",
+    "FeatureID": "61441697",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61441697 (Channels: 26H2)"
+  },
+  {
+    "Id": "61267302",
+    "FeatureID": "61267302",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61267302 (Channels: 26H2)"
+  },
+  {
+    "Id": "61344081",
+    "FeatureID": "61344081",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61344081 (Channels: 26H2)"
+  },
+  {
+    "Id": "61482515",
+    "FeatureID": "61482515",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61482515 (Channels: 26H2)"
+  },
+  {
+    "Id": "61532758",
+    "FeatureID": "61532758",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61532758 (Channels: 26H2)"
+  },
+  {
+    "Id": "61760679",
+    "FeatureID": "61760679",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61760679 (Channels: 26H2)"
+  },
+  {
+    "Id": "61465695",
+    "FeatureID": "61465695",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61465695 (Channels: 26H2)"
+  },
+  {
+    "Id": "61465915",
+    "FeatureID": "61465915",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61465915 (Channels: 26H2)"
+  },
+  {
+    "Id": "62261462",
+    "FeatureID": "62261462",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 62261462 (Channels: 26H2)"
+  },
+  {
+    "Id": "60511437",
+    "FeatureID": "60511437",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60511437 (Channels: 26H2)"
+  },
+  {
+    "Id": "51406324",
+    "FeatureID": "51406324",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 51406324 (Channels: 26H2)"
+  },
+  {
+    "Id": "60288851",
+    "FeatureID": "60288851",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60288851 (Channels: 26H2)"
+  },
+  {
+    "Id": "61225604",
+    "FeatureID": "61225604",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61225604 (Channels: 26H2)"
+  },
+  {
+    "Id": "61596616",
+    "FeatureID": "61596616",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61596616 (Channels: 26H2)"
+  },
+  {
+    "Id": "61596617",
+    "FeatureID": "61596617",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61596617 (Channels: 26H2)"
+  },
+  {
+    "Id": "61596618",
+    "FeatureID": "61596618",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61596618 (Channels: 26H2)"
+  },
+  {
+    "Id": "61596619",
+    "FeatureID": "61596619",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61596619 (Channels: 26H2)"
+  },
+  {
+    "Id": "61372722",
+    "FeatureID": "61372722",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61372722 (Channels: 26H2)"
+  },
+  {
+    "Id": "61014711",
+    "FeatureID": "61014711",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61014711 (Channels: 26H2)"
+  },
+  {
+    "Id": "60897831",
+    "FeatureID": "60897831",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60897831 (Channels: 26H2)"
+  },
+  {
+    "Id": "60662124",
+    "FeatureID": "60662124",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60662124 (Channels: 26H2)"
+  },
+  {
+    "Id": "57156807",
+    "FeatureID": "57156807",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57156807 (Channels: 26H2)"
+  },
+  {
+    "Id": "59956305",
+    "FeatureID": "59956305",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59956305 (Channels: 26H2)"
+  },
+  {
+    "Id": "57751666",
+    "FeatureID": "57751666",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57751666 (Channels: 26H2)"
+  },
+  {
+    "Id": "57751687",
+    "FeatureID": "57751687",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57751687 (Channels: 26H2)"
+  },
+  {
+    "Id": "61157505",
+    "FeatureID": "61157505",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61157505 (Channels: 26H2)"
+  },
+  {
+    "Id": "61410885",
+    "FeatureID": "61410885",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61410885 (Channels: 26H2)"
+  },
+  {
+    "Id": "60772592",
+    "FeatureID": "60772592",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60772592 (Channels: 26H2)"
+  },
+  {
+    "Id": "60911173",
+    "FeatureID": "60911173",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60911173 (Channels: 26H2)"
+  },
+  {
+    "Id": "58429068",
+    "FeatureID": "58429068",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58429068 (Channels: 26H2)"
+  },
+  {
+    "Id": "58111409",
+    "FeatureID": "58111409",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58111409 (Channels: 26H2)"
+  },
+  {
+    "Id": "59149945",
+    "FeatureID": "59149945",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59149945 (Channels: 26H2)"
+  },
+  {
+    "Id": "59764273",
+    "FeatureID": "59764273",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59764273 (Channels: 26H2)"
+  },
+  {
+    "Id": "60772996",
+    "FeatureID": "60772996",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60772996 (Channels: 26H2)"
+  },
+  {
+    "Id": "60597402",
+    "FeatureID": "60597402",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60597402 (Channels: 26H2)"
+  },
+  {
+    "Id": "60825171",
+    "FeatureID": "60825171",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60825171 (Channels: 26H2)"
+  },
+  {
+    "Id": "49059846",
+    "FeatureID": "49059846",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 49059846 (Channels: 26H2)"
+  },
+  {
+    "Id": "60063638",
+    "FeatureID": "60063638",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 60063638 (Channels: 26H2)"
+  },
+  {
+    "Id": "58182453",
+    "FeatureID": "58182453",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58182453 (Channels: 26H2)"
+  },
+  {
+    "Id": "57118881",
+    "FeatureID": "57118881",
+    "Channels": [
+      "26H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57118881 (Channels: 26H2)"
+  },
+  {
+    "Id": "59359094",
+    "FeatureID": "59359094",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59359094 (Channels: 25H2)"
+  },
+  {
+    "Id": "58978959",
+    "FeatureID": "58978959",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58978959 (Channels: 25H2)"
+  },
+  {
+    "Id": "58381341",
+    "FeatureID": "58381341",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58381341 (Channels: 25H2)"
+  },
+  {
+    "Id": "58527096",
+    "FeatureID": "58527096",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58527096 (Channels: 25H2)"
+  },
+  {
+    "Id": "57259990",
+    "FeatureID": "57259990",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57259990 (Channels: 25H2)"
+  },
+  {
+    "Id": "58938944",
+    "FeatureID": "58938944",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58938944 (Channels: 25H2)"
+  },
+  {
+    "Id": "57900749",
+    "FeatureID": "57900749",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57900749 (Channels: 25H2)"
+  },
+  {
+    "Id": "58324036",
+    "FeatureID": "58324036",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58324036 (Channels: 25H2)"
+  },
+  {
+    "Id": "58680439",
+    "FeatureID": "58680439",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58680439 (Channels: 25H2)"
+  },
+  {
+    "Id": "38679741",
+    "FeatureID": "38679741",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 38679741 (Channels: 25H2)"
+  },
+  {
+    "Id": "41118774",
+    "FeatureID": "41118774",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 41118774 (Channels: 25H2)"
+  },
+  {
+    "Id": "55805655",
+    "FeatureID": "55805655",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 55805655 (Channels: 25H2)"
+  },
+  {
+    "Id": "59213523",
+    "FeatureID": "59213523",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59213523 (Channels: 25H2)"
+  },
+  {
+    "Id": "59193521",
+    "FeatureID": "59193521",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59193521 (Channels: 25H2)"
+  },
+  {
+    "Id": "59765208",
+    "FeatureID": "59765208",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59765208 (Channels: 25H2)"
+  },
+  {
+    "Id": "55324166",
+    "FeatureID": "55324166",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 55324166 (Channels: 25H2)"
+  },
+  {
+    "Id": "59673297",
+    "FeatureID": "59673297",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59673297 (Channels: 25H2)"
+  },
+  {
+    "Id": "58423575",
+    "FeatureID": "58423575",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58423575 (Channels: 25H2)"
+  },
+  {
+    "Id": "58778013",
+    "FeatureID": "58778013",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58778013 (Channels: 25H2)"
+  },
+  {
+    "Id": "59339532",
+    "FeatureID": "59339532",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59339532 (Channels: 25H2)"
+  },
+  {
+    "Id": "57739723",
+    "FeatureID": "57739723",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57739723 (Channels: 25H2)"
+  },
+  {
+    "Id": "57941090",
+    "FeatureID": "57941090",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57941090 (Channels: 25H2)"
+  },
+  {
+    "Id": "58970402",
+    "FeatureID": "58970402",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58970402 (Channels: 25H2)"
+  },
+  {
+    "Id": "58383338",
+    "FeatureID": "58383338",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58383338 (Channels: 25H2)"
+  },
+  {
+    "Id": "59270880",
+    "FeatureID": "59270880",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59270880 (Channels: 25H2)"
+  },
+  {
+    "Id": "59203365",
+    "FeatureID": "59203365",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59203365 (Channels: 25H2)"
+  },
+  {
+    "Id": "57703775",
+    "FeatureID": "57703775",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57703775 (Channels: 25H2)"
+  },
+  {
+    "Id": "57645315",
+    "FeatureID": "57645315",
+    "Channels": [
+      "25H2"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 57645315 (Channels: 25H2)"
+  },
+  {
+    "Id": "61121285",
+    "FeatureID": "61121285",
+    "Channels": [
+      "Canary"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 61121285 (Channels: Canary)"
+  },
+  {
+    "Id": "58288238",
+    "FeatureID": "58288238",
+    "Channels": [
+      "Canary"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 58288238 (Channels: Canary)"
+  },
+  {
+    "Id": "53283713",
+    "FeatureID": "53283713",
+    "Channels": [
+      "Canary"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 53283713 (Channels: Canary)"
+  },
+  {
+    "Id": "59065581",
+    "FeatureID": "59065581",
+    "Channels": [
+      "Canary"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 59065581 (Channels: Canary)"
+  },
+  {
+    "Id": "45425284",
+    "FeatureID": "45425284",
+    "Channels": [
+      "Canary"
+    ],
+    "Description": "Pureinfotech Windows 11 feature velocity override 45425284 (Channels: Canary)"
+  }
+]

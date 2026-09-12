@@ -1,0 +1,62 @@
+[
+  {
+    "Name": "Developer Tools",
+    "Tag": "developer",
+    "BackgroundColor": "#1F0D4F",
+    "IconGlyph": "\uE943"
+  },
+  {
+    "Name": "Utilities",
+    "Tag": "utility",
+    "BackgroundColor": "#0D3F2F",
+    "IconGlyph": "\uEC7A"
+  },
+  {
+    "Name": "Browsers",
+    "Tag": "browser",
+    "BackgroundColor": "#3D0F2E",
+    "IconGlyph": "\uE12B"
+  },
+  {
+    "Name": "Media & Entertainment",
+    "Tag": "player",
+    "BackgroundColor": "#4F2D0D",
+    "IconGlyph": "\uE102"
+  },
+  {
+    "Name": "Productivity",
+    "Tag": "productivity",
+    "BackgroundColor": "#0D2F4F",
+    "IconGlyph": "\uE821"
+  },
+  {
+    "Name": "Gaming",
+    "Tag": "game",
+    "BackgroundColor": "#4F0D2F",
+    "IconGlyph": "\uE7FC"
+  },
+  {
+    "Name": "Security",
+    "Tag": "security",
+    "BackgroundColor": "#0D4F3F",
+    "IconGlyph": "\uE823"
+  },
+  {
+    "Name": "Education",
+    "Tag": "education",
+    "BackgroundColor": "#2F0D4F",
+    "IconGlyph": "\uE80E"
+  },
+  {
+    "Name": "Music",
+    "Tag": "music",
+    "BackgroundColor": "#3F2F0D",
+    "IconGlyph": "\uEC4C"
+  },
+  {
+    "Name": "Photography",
+    "Tag": "photography",
+    "BackgroundColor": "#0D3F4F",
+    "IconGlyph": "\uE722"
+  }
+]

@@ -1,0 +1,29 @@
+<UserControl
+    x:Class="WingetStore.Controls.PackageProgressControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid" Visibility="Collapsed">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Spacing="4" VerticalAlignment="Center" MinWidth="{x:Bind StatusPanelMinWidth, Mode=OneWay}">
+            <TextBlock Text="{x:Bind StatusText, Mode=OneWay}" FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                TextTrimming="CharacterEllipsis" />
+            <ProgressBar Value="{x:Bind Progress, Mode=OneWay}" Height="4"
+                Minimum="0" Maximum="100" />
+        </StackPanel>
+        <Button Grid.Column="1" Padding="4" Margin="{x:Bind LogButtonMargin, Mode=OneWay}"
+            Background="Transparent" BorderThickness="0"
+            Click="LogButton_Click" VerticalAlignment="Center"
+            ToolTipService.ToolTip="View Installation Log"
+            AutomationProperties.Name="View installation log">
+            <FontIcon Glyph="&#xE9F9;" FontSize="12" />
+        </Button>
+    </Grid>
+</UserControl>

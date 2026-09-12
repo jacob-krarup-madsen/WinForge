@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application
+    x:Class="WingetStore.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WingetStore">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <StaticResource x:Key="WingetCardBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    <StaticResource x:Key="WingetCardBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+                    <StaticResource x:Key="WingetPublisherTextBrush" ResourceKey="TextFillColorSecondaryBrush" />
+                    <SolidColorBrush x:Key="WingetUpdatesIndicatorBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="WingetInstalledBadgeBrush" Color="#2E7D32" />
+                    <StaticResource x:Key="WingetCategoryBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    <StaticResource x:Key="WingetCategoryBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+                    <SolidColorBrush x:Key="WingetCardSubtleSurface" Color="#15FFFFFF" />
+                    <SolidColorBrush x:Key="WingetNavigationSelectedBackground" Color="#22FFFFFF" />
+                    <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="#22FFFFFF" />
+                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{ThemeResource SystemAccentColor}" />
+                    <StaticResource x:Key="NavigationViewItemBackgroundSelectedPointerOver" ResourceKey="NavigationViewItemBackgroundSelected" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <StaticResource x:Key="WingetCardBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    <StaticResource x:Key="WingetCardBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+                    <StaticResource x:Key="WingetPublisherTextBrush" ResourceKey="TextFillColorSecondaryBrush" />
+                    <SolidColorBrush x:Key="WingetUpdatesIndicatorBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="WingetInstalledBadgeBrush" Color="#2E7D32" />
+                    <StaticResource x:Key="WingetCategoryBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    <StaticResource x:Key="WingetCategoryBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+                    <SolidColorBrush x:Key="WingetCardSubtleSurface" Color="#0C000000" />
+                    <SolidColorBrush x:Key="WingetNavigationSelectedBackground" Color="#12000000" />
+                    <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="#12000000" />
+                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{ThemeResource SystemAccentColor}" />
+                    <StaticResource x:Key="NavigationViewItemBackgroundSelectedPointerOver" ResourceKey="NavigationViewItemBackgroundSelected" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <StaticResource x:Key="WingetCardBackgroundBrush" ResourceKey="SystemControlPageBackgroundAltHighBrush" />
+                    <StaticResource x:Key="WingetCardBorderBrush" ResourceKey="SystemControlHighlightBaseMediumBrush" />
+                    <StaticResource x:Key="WingetPublisherTextBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+                    <StaticResource x:Key="WingetUpdatesIndicatorBrush" ResourceKey="SystemControlHighlightBaseMediumBrush" />
+                    <SolidColorBrush x:Key="WingetInstalledBadgeBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <StaticResource x:Key="WingetCategoryBackgroundBrush" ResourceKey="SystemControlPageBackgroundAltHighBrush" />
+                    <StaticResource x:Key="WingetCategoryBorderBrush" ResourceKey="SystemControlHighlightBaseMediumBrush" />
+                    <SolidColorBrush x:Key="WingetCardSubtleSurface" Color="Transparent" />
+                    <SolidColorBrush x:Key="WingetNavigationSelectedBackground" Color="{ThemeResource SystemColorHighlightColor}" />
+                    <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="{ThemeResource SystemColorHighlightColor}" />
+                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{ThemeResource SystemColorHighlightTextColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <!-- Grid item style removes all extra padding from GridView items -->
+            <Style x:Key="WingetRecommendationGridItemStyle" TargetType="GridViewItem">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+
+            <!-- Grid item style for category tiles -->
+            <Style x:Key="WingetCategoryGridItemStyle" TargetType="GridViewItem">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+
+            <!-- Install action button (accent/filled) -->
+            <Style x:Key="InstallButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />
+                <Setter Property="Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Height" Value="26" />
+                <Setter Property="Padding" Value="10,0,10,0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <!-- Uninstall action button (outline/subtle) -->
+            <Style x:Key="UninstallButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Height" Value="28" />
+                <Setter Property="Padding" Value="8,0,8,0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <!-- Header command style for buttons in page header toolbars -->
+            <Style x:Key="HeaderCommandStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="6,2,6,2" />
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <!-- Header command toggle style for toggle buttons in page header toolbars -->
+            <Style x:Key="HeaderCommandToggleStyle" TargetType="ToggleButton">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="6,2,6,2" />
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <!-- Category toggle style for category filter toggle buttons -->
+            <Style x:Key="CategoryToggleStyle" TargetType="ToggleButton">
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="Padding" Value="12,5" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+            </Style>
+
+            <!-- Accent button style (fallback when profiler prevents WinUI from resolving its own) -->
+            <Style x:Key="AccentButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />
+                <Setter Property="Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="Height" Value="32" />
+                <Setter Property="Padding" Value="12,0,12,0" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!-- System fill color brushes (fallback when profiler prevents WinUI from resolving) -->
+            <SolidColorBrush x:Key="SystemFillColorAlertBrush" Color="#D32F2F" />
+
+            <!-- Sort header button style for column header sort buttons in list pages -->
+            <Style x:Key="SortHeaderButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+
+            <!-- List item container style for package list rows (removes default row chrome) -->
+            <Style x:Key="PackageListRowItemStyle" TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

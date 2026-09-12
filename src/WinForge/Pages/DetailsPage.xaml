@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="WingetStore.Pages.DetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WingetStore.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WingetStore.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <controls:ResponsivePageContainer>
+        <Grid RowSpacing="16">
+            <Grid.RowDefinitions>
+                <!-- Navigation Header -->
+                <RowDefinition Height="Auto" />
+                <!-- Loading Indicator -->
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Back Button & Page Header -->
+            <StackPanel Orientation="Horizontal" Spacing="16" Grid.Row="0">
+                <Button x:Name="BackButton" Click="BackButton_Click" ToolTipService.ToolTip="Go back" AutomationProperties.Name="Go back">
+                    <FontIcon Glyph="&#xE72B;" FontSize="14" />
+                </Button>
+                <TextBlock Text="App Details" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Content Area -->
+            <Grid Grid.Row="1">
+                <!-- Loading State -->
+                <ProgressRing
+                    x:Name="DetailsProgress"
+                    IsActive="True"
+                    Width="48"
+                    Height="48"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+                <!-- Loaded State -->
+                <Grid x:Name="DetailsContentPanel" Visibility="Collapsed" RowSpacing="24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Header Row: Icon, Title, Publisher, Version, Action -->
+                    <Grid ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Width="72" Height="72" VerticalAlignment="Center">
+                            <Border
+                                x:Name="AppIconPlaceholder"
+                                Width="72"
+                                Height="72"
+                                CornerRadius="12">
+                                <TextBlock x:Name="AppIconPlaceholderText" Foreground="White" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <Image
+                                x:Name="AppIconImage"
+                                Width="72"
+                                Height="72"
+                                Visibility="Collapsed" />
+                        </Grid>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                            <TextBlock
+                                x:Name="AppNameText"
+                                FontSize="22"
+                                FontWeight="Bold"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                x:Name="PublisherText"
+                                FontSize="15"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                x:Name="VersionText"
+                                FontSize="14"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                        </StackPanel>
+
+                        <!-- Action Button -->
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal" Spacing="8">
+                            <Button
+                                x:Name="ViewLogsButton"
+                                Content="View Log"
+                                Click="ViewLogsButton_Click"
+                                Visibility="Collapsed"
+                                Width="100"
+                                Height="36"
+                                AutomationProperties.Name="View installation log" />
+                            <Button
+                                x:Name="ActionButton"
+                                Content="Install"
+                                Click="ActionButton_Click"
+                                Width="120"
+                                Height="36"
+                                Style="{StaticResource AccentButtonStyle}"
+                                AutomationProperties.Name="Install or update application" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Installation Progress -->
+                    <Grid
+                        Grid.Row="1"
+                        x:Name="ProgressGrid"
+                        Visibility="Collapsed"
+                        RowSpacing="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="ProgressStatusText" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <ProgressBar x:Name="TaskProgressBar" Grid.Row="1" Minimum="0" Maximum="100" Height="6" />
+                    </Grid>
+
+                    <!-- Details scrollable body -->
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                        <Grid ColumnSpacing="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left Column: Description & Release Notes -->
+                            <StackPanel Spacing="20">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Description" FontWeight="SemiBold" FontSize="16" />
+                                    <TextBlock
+                                        x:Name="DescriptionText"
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextWrapping="Wrap"
+                                        LineHeight="20" />
+                                </StackPanel>
+
+                                <!-- Screenshots Panel -->
+                                <StackPanel x:Name="ScreenshotsPanel" Spacing="8" Visibility="Collapsed" Margin="0,0,0,8">
+                                    <TextBlock Text="Screenshots" FontWeight="SemiBold" FontSize="16" />
+                                    <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                                        <ItemsControl x:Name="ScreenshotsList">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="12" Padding="0,4,0,12" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Button Padding="0" BorderThickness="0" Background="Transparent" Click="Screenshot_Click" CornerRadius="8" AutomationProperties.Name="View screenshot">
+                                                        <Grid CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
+                                                            <Image Source="{x:Bind}" Height="200" Stretch="Uniform" />
+                                                        </Grid>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </StackPanel>
+
+                                <StackPanel x:Name="ReleaseNotesPanel" Spacing="8" Visibility="Collapsed">
+                                    <TextBlock Text="Release Notes" FontWeight="SemiBold" FontSize="16" />
+                                    <TextBlock
+                                        x:Name="ReleaseNotesText"
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextWrapping="Wrap"
+                                        LineHeight="20" />
+                                </StackPanel>
+
+                                <!-- Tags Section -->
+                                <StackPanel x:Name="TagsPanel" Spacing="8" Visibility="Collapsed">
+                                    <TextBlock Text="Tags" FontWeight="SemiBold" FontSize="16" />
+                                    <ItemsControl x:Name="TagsList">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsWrapGrid Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Button
+                                                    Content="{x:Bind}"
+                                                    Margin="0,0,8,8"
+                                                    Padding="12,4,12,4"
+                                                    CornerRadius="12"
+                                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="1"
+                                                    FontSize="12"
+                                                    Click="TagButton_Click"
+                                                    AutomationProperties.Name="Filter by tag" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Right Column: Information / Metadata details -->
+                            <StackPanel Grid.Column="1" Spacing="16">
+                                <TextBlock Text="Information" FontWeight="SemiBold" FontSize="16" />
+                                <StackPanel x:Name="MetadataContainer" Spacing="12" />
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            
+            <!-- Lightbox Overlay for Screenshots -->
+            <Grid
+                x:Name="LightboxOverlay"
+                Grid.RowSpan="2"
+                Background="#C0000000"
+                Visibility="Collapsed"
+                Tapped="LightboxOverlay_Tapped">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <Image
+                    x:Name="LightboxImage"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Stretch="Uniform"
+                    Margin="40" />
+                    
+                <Button
+                    Grid.Row="1"
+                    Content="Close"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,24"
+                    Click="CloseLightbox_Click"
+                    AutomationProperties.Name="Close screenshot preview" />
+            </Grid>
+        </Grid>
+    </controls:ResponsivePageContainer>
+</Page>

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SpeedOptimizer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SpeedOptimizer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

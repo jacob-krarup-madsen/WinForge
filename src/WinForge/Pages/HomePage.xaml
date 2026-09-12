@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="WingetStore.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WingetStore.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WingetStore.Pages"
+    xmlns:models="using:WingetStore.Models"
+    xmlns:vm="using:WingetStore.ViewModels"
+    xmlns:app="using:WingetStore"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="PageRoot"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!-- Recommendation App Card Template -->
+        <DataTemplate x:Key="RecommendationCardTemplate" x:DataType="vm:RecommendationCardViewModel">
+            <Border
+                Height="{x:Bind LayoutState.CardHeight, Mode=OneWay}"
+                Margin="{x:Bind LayoutState.CardMargin, Mode=OneWay}"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource WingetCardBorderBrush}"
+                Background="{ThemeResource WingetCardBackgroundBrush}"
+                Padding="12"
+                Translation="0,0,4"
+                UseSystemFocusVisuals="True">
+                <Grid RowSpacing="4" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0: Icon + Name / Publisher -->
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="40" Height="40" VerticalAlignment="Center">
+                            <Border Width="40" Height="40" CornerRadius="6" Background="{x:Bind Package.PlaceholderBackground, Mode=OneWay}" Visibility="{x:Bind app:App.CollapsedIf(Package.HasIcon), Mode=OneWay}">
+                                <TextBlock Text="{x:Bind Package.Initial, Mode=OneWay}" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <Image Source="{x:Bind app:App.ToImageSource(Package.IconUrl), Mode=OneWay}" Width="40" Height="40" Stretch="Uniform" Visibility="{x:Bind app:App.VisibleIf(Package.HasIcon), Mode=OneWay}" />
+                        </Grid>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
+                            <TextBlock Text="{x:Bind Package.Name, Mode=OneWay}" FontWeight="SemiBold" FontSize="14" MaxLines="1" TextTrimming="CharacterEllipsis" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Package.Publisher, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" MaxLines="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                <Border Grid.Column="1" CornerRadius="3" Background="{ThemeResource WingetInstalledBadgeBrush}" Padding="5,2,5,2" VerticalAlignment="Center" Visibility="{x:Bind app:App.VisibleIf(Package.IsUninstallAction), Mode=OneWay}" Margin="6,0,0,0">
+                                    <TextBlock Text="Installed" FontSize="11" Foreground="White" />
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Row 1: Version+Source (or progress) + Action Button -->
+                    <Grid Grid.Row="1" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Installing state -->
+                        <StackPanel Grid.Column="0" Visibility="{x:Bind app:App.VisibleIf(Package.IsInstalling), Mode=OneWay}" VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="{x:Bind Package.InstallStatusText, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}" TextTrimming="CharacterEllipsis" />
+                            <ProgressBar Value="{x:Bind Package.InstallProgress, Mode=OneWay}" Minimum="0" Maximum="100" Height="3" />
+                        </StackPanel>
+
+                        <!-- Normal state: version+source metadata -->
+                        <TextBlock Grid.Column="0" Text="{x:Bind Package.FormattedVersionAndSource, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}" MaxLines="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind app:App.CollapsedIf(Package.IsInstalling), Mode=OneWay}" />
+
+                        <!-- Install button (accent/filled) -->
+                        <Button Grid.Column="1" Content="Install" Click="ActionButton_Click" Style="{StaticResource InstallButtonStyle}" Visibility="{x:Bind app:App.CollapsedIf(Package.IsUninstallAction), Mode=OneWay}" IsEnabled="{x:Bind app:App.Not(Package.IsInstalling), Mode=OneWay}" VerticalAlignment="Center" AutomationProperties.Name="Install" />
+
+                        <!-- Uninstall button (outline/subtle) -->
+                        <Button Grid.Column="1" Content="Uninstall" Click="ActionButton_Click" Style="{StaticResource UninstallButtonStyle}" Visibility="{x:Bind app:App.VisibleIf(Package.IsUninstallAction), Mode=OneWay}" IsEnabled="{x:Bind app:App.Not(Package.IsInstalling), Mode=OneWay}" VerticalAlignment="Center" AutomationProperties.Name="Uninstall" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <controls:ResponsivePageContainer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="12" HorizontalAlignment="Stretch">
+                    <!-- Page Header Section -->
+                    <StackPanel Spacing="12" HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Discover Applications" FontSize="26" FontWeight="Bold" />
+                        <TextBlock Text="Browse, install, and manage software through Windows Package Manager" FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    </StackPanel>
+
+                    <!-- Unified Search Bar -->
+                    <Border BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="6" Background="{ThemeResource TextControlBackground}" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Name="HomeSearchBox"
+                                PlaceholderText="Search apps by name, ID, or publisher..."
+                                Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay}"
+                                KeyDown="HomeSearchBox_KeyDown"
+                                Height="36"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0"
+                                AutomationProperties.Name="Search applications" />
+                            <Rectangle Grid.Column="1" Width="1" Fill="{ThemeResource CardStrokeColorDefaultBrush}" VerticalAlignment="Stretch" />
+                            <Button Grid.Column="1" Content="Search" Click="SearchButton_Click" Height="36" MinWidth="64" CornerRadius="0" AutomationProperties.Name="Search" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <!-- Search Helper / State Hint Bar -->
+                <TextBlock x:Name="SearchHintText" Visibility="Collapsed" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,-8" />
+
+                <!-- Error Feedback InfoBar -->
+                <InfoBar x:Name="ErrorInfoBar" Title="Notice" Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.IsErrorOpen, Mode=TwoWay}" Severity="Warning" />
+
+                <!-- Loading Indicator -->
+                <ProgressRing x:Name="SearchProgress" IsActive="False" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
+
+                <!-- SEARCH RESULTS SECTION (Shown when Search is Active) -->
+                <StackPanel x:Name="SearchResultsPanel" Spacing="16" Visibility="Collapsed" HorizontalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="SearchResultsTitle" Text="Search Results" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="Clear Search" Click="ClearSearchButton_Click" VerticalAlignment="Center" AutomationProperties.Name="Clear search" />
+                    </Grid>
+
+                    <!-- Empty State Message -->
+                    <StackPanel x:Name="EmptyStatePanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12" Margin="0,32,0,32">
+                        <FontIcon Glyph="&#xE721;" FontSize="48" Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                        <TextBlock Text="No packages found matching your query." FontSize="16" Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Results List -->
+                    <ListView x:Name="SearchResultsList" ItemsSource="{x:Bind ViewModel.FilteredSearchResults, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="SearchResultsList_ItemClick" HorizontalAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:WingetPackage">
+                                <Grid Padding="12,8,12,8" ColumnSpacing="16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Width="36" Height="36" VerticalAlignment="Center">
+                                        <Border Width="36" Height="36" CornerRadius="4" Background="{x:Bind PlaceholderBackground, Mode=OneWay}" Visibility="{x:Bind app:App.CollapsedIf(HasIcon), Mode=OneWay}">
+                                            <TextBlock Text="{x:Bind Initial, Mode=OneWay}" Foreground="White" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Image Source="{x:Bind app:App.ToImageSource(IconUrl), Mode=OneWay}" Width="36" Height="36" Stretch="Uniform" Visibility="{x:Bind app:App.VisibleIf(HasIcon), Mode=OneWay}" />
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" FontSize="15" />
+                                        <TextBlock Text="{x:Bind Id}" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="{x:Bind Version}" VerticalAlignment="Center" FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <Grid Grid.Column="3" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind Source}" Visibility="{x:Bind app:App.CollapsedIf(IsInstalling), Mode=OneWay}" FontSize="14" Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                                        <StackPanel Visibility="{x:Bind app:App.VisibleIf(IsInstalling), Mode=OneWay}" Spacing="4">
+                                            <TextBlock Text="{x:Bind InstallStatusText, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <ProgressBar Value="{x:Bind InstallProgress, Mode=OneWay}" Height="4" Minimum="0" Maximum="100" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button Grid.Column="4" Content="Details" Click="DetailsButton_Click" IsEnabled="{x:Bind app:App.Not(IsInstalling), Mode=OneWay}" VerticalAlignment="Center" Width="80" AutomationProperties.Name="View application details" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+
+                <!-- DISCOVER CONTENT SECTION (Recommendations & Categories) -->
+                <StackPanel x:Name="DiscoverContentPanel" Spacing="12" Visibility="Visible" HorizontalAlignment="Stretch">
+                    <!-- Recommended for You Section -->
+                    <StackPanel x:Name="RecommendationsPanel" Spacing="12" Visibility="Visible" HorizontalAlignment="Stretch">
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,4,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Popular Applications" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            <HyperlinkButton Grid.Column="1" Content="Browse all applications" Click="SeeAllButton_Click" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Padding="0" AutomationProperties.Name="Browse all applications" ToolTipService.ToolTip="Browse all applications in the catalog" />
+                        </Grid>
+
+                        <GridView
+                            x:Name="RecommendationsGrid"
+                            ItemContainerStyle="{StaticResource WingetRecommendationGridItemStyle}"
+                            ItemTemplate="{StaticResource RecommendationCardTemplate}"
+                            IsItemClickEnabled="True"
+                            ItemClick="PopularAppsGrid_ItemClick"
+                            HorizontalAlignment="Stretch">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="5" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
+                    </StackPanel>
+
+                    <!-- Categories Section -->
+                    <StackPanel Spacing="12" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Categories" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,4,0,4" />
+                        <GridView x:Name="CategoriesGrid" ItemContainerStyle="{StaticResource WingetCategoryGridItemStyle}" ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick" HorizontalAlignment="Stretch">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="models:CategoryItem">
+                                    <Border Height="90" Margin="0,0,12,12" CornerRadius="8" Background="{ThemeResource WingetCategoryBackgroundBrush}" BorderBrush="{ThemeResource WingetCategoryBorderBrush}" BorderThickness="1" Translation="0,0,2">
+                                        <StackPanel Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <FontIcon Glyph="{x:Bind IconGlyph}" FontSize="28" Foreground="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" />
+                                            <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid x:Name="CategoriesWrapGrid" Orientation="Horizontal" MaximumRowsOrColumns="5" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
+                    </StackPanel>
+                </StackPanel>
+                <!-- Bottom padding for terminal boundary -->
+                <Rectangle Height="24" Opacity="0" />
+            </StackPanel>
+        </ScrollViewer>
+    </controls:ResponsivePageContainer>
+</Page>

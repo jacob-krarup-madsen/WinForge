@@ -1,0 +1,12 @@
+[
+  { "Id": "Microsoft.VisualStudioCode", "Name": "Visual Studio Code", "Publisher": "Microsoft", "Version": "1.96.4", "Source": "winget", "Description": "Code editing redefined" },
+  { "Id": "Git.Git", "Name": "Git", "Publisher": "Git", "Version": "2.47.1", "Source": "winget", "Description": "Distributed version control system" },
+  { "Id": "Google.Chrome", "Name": "Google Chrome", "Publisher": "Google LLC", "Version": "131.0.6778.205", "Source": "winget", "Description": "Fast, secure web browser" },
+  { "Id": "Mozilla.Firefox", "Name": "Mozilla Firefox", "Publisher": "Mozilla", "Version": "133.0.3", "Source": "winget", "Description": "Free and open-source web browser" },
+  { "Id": "7zip.7zip", "Name": "7-Zip", "Publisher": "Igor Pavlov", "Version": "24.09", "Source": "winget", "Description": "File archiver with a high compression ratio" },
+  { "Id": "VideoLAN.VLC", "Name": "VLC Media Player", "Publisher": "VideoLAN", "Version": "3.0.21", "Source": "winget", "Description": "Free and open source cross-platform multimedia player" },
+  { "Id": "Notepad++.Notepad++", "Name": "Notepad++", "Publisher": "Don Ho", "Version": "8.7.4", "Source": "winget", "Description": "Free source code editor and Notepad replacement" },
+  { "Id": "Discord.Discord", "Name": "Discord", "Publisher": "Discord Inc.", "Version": "1.0.9175", "Source": "winget", "Description": "Voice, video, and text chat service" },
+  { "Id": "Microsoft.PowerToys", "Name": "PowerToys", "Publisher": "Microsoft", "Version": "0.87.0", "Source": "winget", "Description": "System utilities for power users" },
+  { "Id": "Spotify.Spotify", "Name": "Spotify", "Publisher": "Spotify AB", "Version": "1.2.53.440", "Source": "winget", "Description": "Digital music and podcast service" }
+]

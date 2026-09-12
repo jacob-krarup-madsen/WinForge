@@ -1,0 +1,11 @@
+## Runtime logs
+logs/
+*.log
+*.csv
+
+## Agent temporary files
+.agents/
+
+## OS files
+.DS_Store
+Thumbs.db

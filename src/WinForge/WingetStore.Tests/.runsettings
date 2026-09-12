@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Exclude>[WingetStore.Tests]*,[WingetStore]WinRT*,[WingetStore]WingetStore.WingetStore_XamlTypeInfo*,[WingetStore]WingetStore.ErrorWindow*,[WingetStore]WingetStore.Pages.*,[WingetStore]WingetStore.Controls.*,[WingetStore]WingetStore.App*,[WingetStore]WingetStore.MainWindow*,[WingetStore]WingetStore.Program*,[WingetStore]WingetStore.Services.CliProcessRunner,[WingetStore]WingetStore.Services.NotificationService,[WingetStore]WingetStore.Services.IconService*,[WingetStore]*d__*</Exclude>
+          <ExcludeByAttribute>ExcludeFromCodeCoverage</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

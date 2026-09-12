@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "WinForge (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinForge (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "WinForge (UI Tests)": {
+      "commandName": "Project",
+      "commandLineArgs": "--run-ui-tests"
+    }
+  }
+}
