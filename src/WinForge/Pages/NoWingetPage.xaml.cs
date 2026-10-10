@@ -180,31 +180,33 @@ public sealed partial class NoWingetPage : Page
             StatusText.Text = GetInstallStatusMessage(InstallStep.Installing);
             InstallProgress.IsIndeterminate = true;
 
-            var processInfo = new ProcessStartInfo
+            bool packageInstalled = false;
+            try
             {
-                FileName = "powershell.exe",
-                Arguments = GetPowershellInstallArguments(tempPath),
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardError = true
-            };
+                var packageManager = new Windows.Management.Deployment.PackageManager();
+                var deploymentOperation = packageManager.AddPackageAsync(
+                    new Uri(Path.GetFullPath(tempPath)),
+                    null,
+                    Windows.Management.Deployment.DeploymentOptions.None);
 
-            using (var process = Process.Start(processInfo))
+                var deploymentResult = await deploymentOperation.AsTask(ct);
+                ct.ThrowIfCancellationRequested();
+                packageInstalled = deploymentOperation.Status == Windows.Foundation.AsyncStatus.Completed
+                    && string.IsNullOrEmpty(deploymentResult?.ErrorText);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
             {
-                if (process != null)
-                {
-                    await process.WaitForExitAsync(ct);
-                    ct.ThrowIfCancellationRequested();
-                    if (process.ExitCode == 0)
-                    {
-                        StatusText.Text = GetInstallStatusMessage(InstallStep.Success);
-                        InstallProgress.IsIndeterminate = false;
-                        InstallProgress.Value = 100;
-                        await Task.Delay(2000, ct);
-                        Frame.Navigate(typeof(HomePage));
-                        return;
-                    }
-                }
+                packageInstalled = false;
+            }
+
+            if (packageInstalled)
+            {
+                StatusText.Text = GetInstallStatusMessage(InstallStep.Success);
+                InstallProgress.IsIndeterminate = false;
+                InstallProgress.Value = 100;
+                await Task.Delay(2000, ct);
+                Frame.Navigate(typeof(HomePage));
+                return;
             }
 
             ct.ThrowIfCancellationRequested();

@@ -317,7 +317,7 @@ public class IconService
             using (var fileStream = File.Create(tempFilePath))
             {
                 int bytesRead;
-                while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                while ((bytesRead = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length))) > 0)
                 {
                     totalBytesRead += bytesRead;
                     if (totalBytesRead > MaxIconSizeBytes)
@@ -334,7 +334,7 @@ public class IconService
                         firstBytesRead += toCopy;
                     }
 
-                    await fileStream.WriteAsync(buffer, 0, bytesRead);
+                    await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead));
                 }
             }
 

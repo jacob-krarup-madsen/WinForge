@@ -332,7 +332,7 @@ public sealed partial class MainWindow : Window
     {
         count = Math.Max(0, count);
         bool hasUpdates = count > 0;
-        string badgeText = Math.Min(count, 99).ToString();
+        string badgeText = Math.Min(count, 99).ToString(System.Globalization.CultureInfo.InvariantCulture);
         string automationName = count switch
         {
             0 => "Updates, none available",

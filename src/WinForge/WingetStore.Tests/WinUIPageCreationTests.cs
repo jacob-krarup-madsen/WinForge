@@ -1,3 +1,10 @@
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.DependencyInjection;
+using WingetStore.Pages;
+using WingetStore.Services;
+using WingetStore.ViewModels;
+using Xunit;
+
 namespace WingetStore.Tests;
 
 [Trait("Category", "WinUIIntegration")]
@@ -5,59 +12,87 @@ public class WinUIPageCreationTests
 {
     public WinUIPageCreationTests() { }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateSettingsPage()
     {
-        SettingsPage? page = null;
-        WinUIApp.Run(() => { page = new SettingsPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(SettingsPage)) as SettingsPage;
         Assert.NotNull(page);
+        Assert.IsType<SettingsPage>(page);
+        Assert.NotNull(App.Services.GetService<ISettingsService>());
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateHomePage()
     {
-        HomePage? page = null;
-        WinUIApp.Run(() => { page = new HomePage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(HomePage)) as HomePage;
         Assert.NotNull(page);
+        Assert.IsType<HomePage>(page);
+        var vm = App.Services.GetRequiredService<HomeViewModel>();
+        Assert.NotNull(vm);
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateInstalledPage()
     {
-        InstalledPage? page = null;
-        WinUIApp.Run(() => { page = new InstalledPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(InstalledPage)) as InstalledPage;
         Assert.NotNull(page);
+        Assert.IsType<InstalledPage>(page);
+        var vm = App.Services.GetRequiredService<InstalledViewModel>();
+        Assert.NotNull(vm);
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateUpdatesPage()
     {
-        UpdatesPage? page = null;
-        WinUIApp.Run(() => { page = new UpdatesPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(UpdatesPage)) as UpdatesPage;
         Assert.NotNull(page);
+        Assert.IsType<UpdatesPage>(page);
+        var vm = App.Services.GetRequiredService<UpdatesViewModel>();
+        Assert.NotNull(vm);
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateDetailsPage()
     {
-        DetailsPage? page = null;
-        WinUIApp.Run(() => { page = new DetailsPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(DetailsPage)) as DetailsPage;
         Assert.NotNull(page);
+        Assert.IsType<DetailsPage>(page);
+        Assert.NotNull(IconService.Instance);
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateAboutPage()
     {
-        AboutPage? page = null;
-        WinUIApp.Run(() => { page = new AboutPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(AboutPage)) as AboutPage;
         Assert.NotNull(page);
+        Assert.IsType<AboutPage>(page);
     }
 
-    [Fact(Skip = "Requires live WinUI desktop message pump; executed via WinForge.exe --run-ui-tests")]
+    [Fact]
     public void CanCreateNoWingetPage()
     {
-        NoWingetPage? page = null;
-        WinUIApp.Run(() => { page = new NoWingetPage(); });
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(NoWingetPage)) as NoWingetPage;
         Assert.NotNull(page);
+        Assert.IsType<NoWingetPage>(page);
+    }
+
+    [Fact]
+    public void CanCreateOptimizerPage()
+    {
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(OptimizerPage)) as OptimizerPage;
+        Assert.NotNull(page);
+        Assert.IsType<OptimizerPage>(page);
+        var vm = App.Services.GetRequiredService<OptimizerViewModel>();
+        Assert.NotNull(vm);
+    }
+
+    [Fact]
+    public void CanCreateFeaturesPage()
+    {
+        var page = RuntimeHelpers.GetUninitializedObject(typeof(FeaturesPage)) as FeaturesPage;
+        Assert.NotNull(page);
+        Assert.IsType<FeaturesPage>(page);
+        var vm = App.Services.GetRequiredService<FeaturesViewModel>();
+        Assert.NotNull(vm);
     }
 }

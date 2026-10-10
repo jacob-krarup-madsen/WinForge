@@ -10,10 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLowerInvariant())</RuntimeIdentifier>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <SelfContained>true</SelfContained>
-    <NoWarn>$(NoWarn);MTP0001;CS0436;CS8604;CS1998;xUnit1051</NoWarn>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -31,4 +30,14 @@
   <ItemGroup>
     <ProjectReference Include="..\WinForge.csproj" />
   </ItemGroup>
+
+  <!-- Remove duplicate Windows App SDK auto-initializers so they don't conflict with WinForge.dll (CS0436) -->
+  <Target Name="RemoveDuplicateWindowsAppSdkFiles" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Compile Remove="%(Compile.Identity)" Condition="'%(FileName)' == 'WindowsAppRuntimeAutoInitializer' or '%(FileName)' == 'UndockedRegFreeWinRT-AutoInitializer'" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Prevent spurious MTP0001 warning during dotnet test -->
+  <Target Name="_ValidateVSTestProperties" />
 </Project>

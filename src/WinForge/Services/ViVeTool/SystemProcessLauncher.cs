@@ -20,7 +20,7 @@ public class SystemProcessLauncher : IProcessLauncher
         return await RunProcessAsync(fileName, arguments, DefaultTimeout, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<(int ExitCode, string Output, string Error)> RunProcessAsync(
+    public static async Task<(int ExitCode, string Output, string Error)> RunProcessAsync(
         string fileName,
         string arguments,
         TimeSpan timeout,

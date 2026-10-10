@@ -16,6 +16,7 @@
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
     <Version>0.0.1</Version>
@@ -27,9 +28,7 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>WingetStore.Tests</_Parameter1>
     </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>WingetStore.UITests</_Parameter1>
-    </AssemblyAttribute>
+
   </ItemGroup>
 
   <ItemGroup>
@@ -48,17 +47,19 @@
     <Content Include="Assets\categories.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\ViVeTool.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\Albacore.ViVe.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="WingetStore.Tests\**" />
-    <Compile Remove="WingetStore.UITests\**" />
     <EmbeddedResource Remove="WingetStore.Tests\**" />
-    <EmbeddedResource Remove="WingetStore.UITests\**" />
     <None Remove="WingetStore.Tests\**" />
-    <None Remove="WingetStore.UITests\**" />
     <Page Remove="WingetStore.Tests\**" />
-    <Page Remove="WingetStore.UITests\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,6 +89,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinApp" Version="0.6.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="System.Management" Version="9.0.2" />
   </ItemGroup>
 
   <!--

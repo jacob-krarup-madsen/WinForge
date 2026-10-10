@@ -11,18 +11,35 @@
     <ScrollViewer Padding="36,24,36,24">
         <StackPanel Spacing="20" MaxWidth="900" HorizontalAlignment="Left">
             <!-- Header -->
-            <StackPanel Spacing="4">
-                <TextBlock Text="System Optimizer" FontSize="28" FontWeight="SemiBold" />
-                <TextBlock Text="Performance tuning, telemetry debloating, memory flushing, and disk cleaning for Windows 11." 
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="14" />
-            </StackPanel>
+            <Grid ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Spacing="4">
+                    <TextBlock Text="System Optimizer" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="Native C# performance tuning, telemetry debloating, working-set flushing, disk cleaning, auditing, and benchmarking for Windows 11."
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="14" TextWrapping="Wrap" />
+                </StackPanel>
+                <Button x:Name="ImportConfigBtn" Grid.Column="1" Content="Import Profile" VerticalAlignment="Center"
+                        IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="ImportConfigBtn_Click" />
+                <Button x:Name="ExportConfigBtn" Grid.Column="2" Content="Export Profile" VerticalAlignment="Center"
+                        IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="ExportConfigBtn_Click" />
+            </Grid>
 
             <!-- Status InfoBar -->
-            <InfoBar x:Name="OptInfoBar" IsOpen="False" IsClosable="True" />
+            <InfoBar x:Name="OptInfoBar"
+                     IsOpen="{x:Bind ViewModel.IsInfoBarOpen, Mode=TwoWay}"
+                     Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
+                     Title="{x:Bind ViewModel.InfoBarTitle, Mode=OneWay}"
+                     Message="{x:Bind ViewModel.InfoBarMessage, Mode=OneWay}"
+                     IsClosable="True" />
 
             <!-- Optimizer Cards Grid -->
             <Grid RowSpacing="12">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -39,12 +56,17 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <FontIcon Glyph="&#xE770;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
                             <TextBlock Text="Optimize Windows &amp; Disable Telemetry" FontWeight="SemiBold" FontSize="15" />
-                            <TextBlock Text="Disables telemetry, diagnostics tracking, background bloat services, and optimizes scheduling latency." 
+                            <TextBlock Text="Captures a reversible snapshot and applies 25-phase telemetry, service, scheduler, GPU, network, and storage optimizations."
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
+                            <CheckBox x:Name="IncludeSecurityTweaksCheckBox"
+                                      Content="Include security-reducing gaming tweaks (disable HVCI, VBS, Hypervisor &amp; LSA PPL)"
+                                      IsChecked="{x:Bind ViewModel.IncludeSecurityReducingTweaks, Mode=TwoWay}"
+                                      FontSize="12" />
                         </StackPanel>
-                        <Button x:Name="OptimizeBtn" Grid.Column="2" Content="Run Optimizer" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Center" Click="OptimizeBtn_Click" />
+                        <Button x:Name="OptimizeBtn" Grid.Column="2" Content="Run Optimizer" Style="{ThemeResource AccentButtonStyle}"
+                                VerticalAlignment="Center" IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="OptimizeBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -59,10 +81,11 @@
                         <FontIcon Glyph="&#xE74D;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
                             <TextBlock Text="Clean Disk &amp; System Caches" FontWeight="SemiBold" FontSize="15" />
-                            <TextBlock Text="Removes temporary app cache, Windows update leftovers, log dumps, and user temporary files." 
+                            <TextBlock Text="Purges temporary app cache, Windows Update downloads, crash dumps, WER reports, and system logs."
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button x:Name="CleanDiskBtn" Grid.Column="2" Content="Clean Disk" VerticalAlignment="Center" Click="CleanDiskBtn_Click" />
+                        <Button x:Name="CleanDiskBtn" Grid.Column="2" Content="Clean Disk" VerticalAlignment="Center"
+                                IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="CleanDiskBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -77,10 +100,11 @@
                         <FontIcon Glyph="&#xE950;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
                             <TextBlock Text="Flush Standby List &amp; Memory" FontWeight="SemiBold" FontSize="15" />
-                            <TextBlock Text="Reclaims inactive RAM cache, clears modified pages, and minimizes active working sets." 
+                            <TextBlock Text="Trims process working sets via native Win32 EmptyWorkingSet to reclaim inactive physical RAM."
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button x:Name="FlushMemoryBtn" Grid.Column="2" Content="Flush Memory" VerticalAlignment="Center" Click="FlushMemoryBtn_Click" />
+                        <Button x:Name="FlushMemoryBtn" Grid.Column="2" Content="Flush Memory" VerticalAlignment="Center"
+                                IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="FlushMemoryBtn_Click" />
                     </Grid>
                 </Border>
 
@@ -95,15 +119,35 @@
                         <FontIcon Glyph="&#xE7BA;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
                             <TextBlock Text="System Privacy &amp; Health Audit" FontWeight="SemiBold" FontSize="15" />
-                            <TextBlock Text="Audits current Windows security, privacy toggles, and performance benchmark status." 
+                            <TextBlock Text="Non-destructively inspects all 24 optimization phases, comparing live system values against Windows defaults."
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button x:Name="AuditBtn" Grid.Column="2" Content="Run Audit" VerticalAlignment="Center" Click="AuditBtn_Click" />
+                        <Button x:Name="AuditBtn" Grid.Column="2" Content="Run Audit" VerticalAlignment="Center"
+                                IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="AuditBtn_Click" />
                     </Grid>
                 </Border>
 
-                <!-- Card 5: Undo / Restore Defaults -->
+                <!-- Card 5: Performance Benchmark -->
                 <Border Grid.Row="4" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" Padding="16">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Glyph="&#xE9D9;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="CPU &amp; Memory Micro-Benchmark" FontWeight="SemiBold" FontSize="15" />
+                            <TextBlock Text="Measures single-thread CPU arithmetic throughput, 4 KB page-touch memory bandwidth, and OS process footprint."
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <Button x:Name="BenchmarkBtn" Grid.Column="2" Content="Run Benchmark" VerticalAlignment="Center"
+                                IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="BenchmarkBtn_Click" />
+                    </Grid>
+                </Border>
+
+                <!-- Card 6: Undo / Restore Defaults -->
+                <Border Grid.Row="5" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" Padding="16">
                     <Grid ColumnSpacing="16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -112,19 +156,23 @@
                         </Grid.ColumnDefinitions>
                         <FontIcon Glyph="&#xE7A7;" FontSize="24" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                            <TextBlock Text="Restore Default Windows Settings" FontWeight="SemiBold" FontSize="15" />
-                            <TextBlock Text="Re-enables default Windows services, telemetry settings, and resets performance flags." 
+                            <TextBlock Text="Restore Pre-Optimization Snapshot / Windows Defaults" FontWeight="SemiBold" FontSize="15" />
+                            <TextBlock Text="Reverts all tweaks to their captured pre-optimization baseline snapshot (or standard Windows defaults if no snapshot exists)."
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button x:Name="UndoBtn" Grid.Column="2" Content="Restore Defaults" VerticalAlignment="Center" Click="UndoBtn_Click" />
+                        <Button x:Name="UndoBtn" Grid.Column="2" Content="Restore Defaults" VerticalAlignment="Center"
+                                IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="UndoBtn_Click" />
                     </Grid>
                 </Border>
             </Grid>
 
             <!-- Console Output Expander -->
-            <Expander Header="Execution Output" HorizontalAlignment="Stretch" IsExpanded="False">
-                <TextBox x:Name="ConsoleOutputBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" 
-                         FontFamily="Consolas" FontSize="12" Height="180" Background="{ThemeResource SubtleFillColorSecondaryBrush}" />
+            <Expander Header="Execution Output" HorizontalAlignment="Stretch" IsExpanded="True">
+                <TextBox x:Name="ConsoleOutputBox"
+                         Text="{x:Bind ViewModel.ConsoleOutput, Mode=OneWay}"
+                         IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
+                         FontFamily="Consolas" FontSize="12" Height="220"
+                         Background="{ThemeResource SubtleFillColorSecondaryBrush}" />
             </Expander>
         </StackPanel>
     </ScrollViewer>

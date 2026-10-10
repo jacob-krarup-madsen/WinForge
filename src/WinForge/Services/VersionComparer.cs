@@ -44,8 +44,8 @@ public class VersionComparer : IComparer<string>
 
     private static int CompareIdentifierSequence(string a, string b)
     {
-        string[] partsA = a.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-        string[] partsB = b.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] partsA = a.Split('.', StringSplitOptions.RemoveEmptyEntries);
+        string[] partsB = b.Split('.', StringSplitOptions.RemoveEmptyEntries);
 
         int minLen = Math.Min(partsA.Length, partsB.Length);
         for (int i = 0; i < minLen; i++)

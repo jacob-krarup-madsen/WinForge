@@ -301,7 +301,7 @@ public class FeatureItem : INotifyPropertyChanged
     /// <summary>
     /// Formatted last run time text.
     /// </summary>
-    public string LastRunTimeText => LastRunTime?.ToString("HH:mm:ss") ?? "—";
+    public string LastRunTimeText => LastRunTime?.ToString("HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture) ?? "—";
 
     /// <summary>
     /// Resource key for the status brush.

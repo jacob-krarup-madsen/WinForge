@@ -10,4 +10,6 @@ public static class AppPaths
     public static string IconsCacheDir => Path.Combine(Root, "icons");
     public static string ScreenshotDbFile => Path.Combine(Root, "screenshot-database-v2.json");
     public static string CrashLogFile => Path.Combine(Root, "crash.log");
+    public static string OptimizerSnapshotFile => Path.Combine(Root, "optimizer-snapshot.json");
+    public static string OptimizerConfigFile => Path.Combine(Root, "optimizer-config.json");
 }

@@ -3,12 +3,12 @@ using System.Text.Json;
 
 namespace WingetStore.Services;
 
-public class AppSettings { public bool AutoUpdate { get; set; } = false; public string AppTheme { get; set; } = "Default"; public bool EnableNotifications { get; set; } = true; }
+public class AppSettings { public bool AutoUpdate { get; set; } public string AppTheme { get; set; } = "Default"; public bool EnableNotifications { get; set; } = true; }
 
 public class SettingsService : ISettingsService
 {
     private static string SettingsFilePath = AppPaths.SettingsFile;
-    private static AppSettings _settings = new() { AutoUpdate = false };
+    private static AppSettings _settings = new();
     static SettingsService() => LoadSettings();
     bool ISettingsService.AutoUpdate { get => AutoUpdate; set => AutoUpdate = value; }
     string ISettingsService.AppTheme { get => AppTheme; set => AppTheme = value; }

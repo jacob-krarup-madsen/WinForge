@@ -1,0 +1,4 @@
+<Project>
+  <!-- Override Microsoft.Testing.Platform VSTest validation to prevent spurious MTP0001 warning during dotnet test -->
+  <Target Name="_ValidateVSTestProperties" />
+</Project>

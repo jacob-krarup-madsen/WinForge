@@ -20,7 +20,7 @@ public class TaskCancellationTests
         var pkg = new WingetPackage { Id = "Slow.App", Status = PackageStatus.Installable };
 
         service.InstallPackage(pkg);
-        await Task.Delay(100);
+        await Task.Delay(100, TestContext.Current.CancellationToken);
 
         Assert.True(pkg.IsInstalling);
         service.CancelTaskForPackage("Slow.App");

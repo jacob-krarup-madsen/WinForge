@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using WingetStore.Services;
 
 namespace ViVeToolApp.Services;
 
@@ -16,13 +17,19 @@ public class ViVeToolLocator : IViVeToolLocator
             return customPath;
         }
 
-        // 2. Specified or application base directory
+        // 2. Specified or application base directory (root and Tools subfolder)
         if (!string.IsNullOrWhiteSpace(customBaseDirectory))
         {
             var localCandidate = Path.Combine(customBaseDirectory, "vivetool.exe");
             if (File.Exists(localCandidate))
             {
                 return localCandidate;
+            }
+
+            var subDirCandidate = Path.Combine(customBaseDirectory, "Tools", "vivetool.exe");
+            if (File.Exists(subDirCandidate))
+            {
+                return subDirCandidate;
             }
         }
         else
@@ -32,6 +39,12 @@ public class ViVeToolLocator : IViVeToolLocator
             if (File.Exists(localCandidate))
             {
                 return localCandidate;
+            }
+
+            var subDirCandidate = Path.Combine(baseDir, "Tools", "vivetool.exe");
+            if (File.Exists(subDirCandidate))
+            {
+                return subDirCandidate;
             }
         }
 
@@ -53,13 +66,13 @@ public class ViVeToolLocator : IViVeToolLocator
             }
         }
 
-        // 4. Legacy tools folder fallback (only if no explicit custom directory or custom pathEnv was specified)
+        // 4. AppPaths.Root fallback (only if no explicit custom directory or custom pathEnv was specified)
         if (string.IsNullOrWhiteSpace(customBaseDirectory) && pathEnvironment == null)
         {
-            const string legacyCandidate = @"C:\Tools\vivetool_feature_enabler\vivetool.exe";
-            if (File.Exists(legacyCandidate))
+            var appDataCandidate = Path.Combine(AppPaths.Root, "vivetool.exe");
+            if (File.Exists(appDataCandidate))
             {
-                return legacyCandidate;
+                return appDataCandidate;
             }
         }
 

@@ -1,19 +1,40 @@
-## Visual Studio / .NET ignores
+## Visual Studio / .NET / MSBuild
 [Bb]in/
 [Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+ARM64/
 [Tt]est[Rr]esults/
 .vs/
+_ReSharper*/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 *.DotSettings.user
 *.log
+*.binlog
 *.current
+*.cache
+*.opendb
+*.db-shm
+*.db-wal
+[Bb]uild[Ll]og.*
 AppPackages/
 BundleArtifacts/
+Generated Files/
 publish-*/
 *.zip
+packages/
+*.nupkg
+
+## PowerShell & Script Caches
+*.ps1xml
+*~
+*.bak
+*.tmp
 
 ## Temporary / QA exports
 qa-export/
@@ -26,6 +47,8 @@ tools/cli/tests/*.json
 ## OS files
 .DS_Store
 Thumbs.db
+desktop.ini
+
 # Secrets & env - never commit
 .env
 .env.local

@@ -102,10 +102,7 @@ public class ViewModelTests
     public async Task ViewModels_EdgeCasesAndDeepCoverage()
     {
         var mainWindowProp = typeof(App).GetProperty("MainWindow", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)!;
-#pragma warning disable SYSLIB0050
-        var mockMainWindow = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(MainWindow));
-
-#pragma warning restore SYSLIB0050
+        var mockMainWindow = System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(MainWindow));
         mainWindowProp.SetValue(null, mockMainWindow);
 
         await TestHelper.RunWithDispatcherAsync(async () =>

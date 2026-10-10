@@ -1,5 +1,3 @@
-#pragma warning disable CS1998
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,7 +67,7 @@ public static class UITestRunner
         public Task<List<WingetPackage>> GetRecommendationsAsync() => inner.GetRecommendationsAsync();
         public Task<List<CategoryItem>> GetCategoriesAsync() => inner.GetCategoriesAsync();
         public Task<WingetPackage?> GetPackageDetailsAsync(PackageId packageId) => inner.GetPackageDetailsAsync(packageId);
-        public async Task<WingetPackage> FetchAndDecoratePackageDetailsAsync(PackageId packageId) => new()
+        public Task<WingetPackage> FetchAndDecoratePackageDetailsAsync(PackageId packageId) => Task.FromResult(new WingetPackage
         {
             Id = packageId,
             Name = "Mock Rich Package",
@@ -82,7 +80,7 @@ public static class UITestRunner
             Tags = ["developer", "tools", "testing", "mock"],
             Screenshots = ["https://example.com/screenshots/ss1.png", "https://example.com/screenshots/ss2.png"],
             Status = PackageStatus.Installable,
-        };
+        });
         public void InstallPackage(WingetPackage package) => inner.InstallPackage(package);
         public void UpgradePackage(WingetPackage package) => inner.UpgradePackage(package);
         public void UninstallPackage(WingetPackage package) => inner.UninstallPackage(package);
@@ -125,6 +123,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage search & sort", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     hp.ViewModel.FilterQuery = "git";
@@ -135,6 +134,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage clear search", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -146,6 +146,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage see all", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -158,6 +159,7 @@ public static class UITestRunner
             // HomePage SearchButton_Click: covers ProcessSearchInput path
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage SearchButton_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -170,6 +172,7 @@ public static class UITestRunner
             // HomePage DetailsButton_Click: covers navigation via Button.DataContext
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage DetailsButton_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -182,6 +185,7 @@ public static class UITestRunner
             // HomePage ActionButton_Click: covers RecommendationCardViewModel DataContext path
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage ActionButton_Click (card VM)", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -195,6 +199,7 @@ public static class UITestRunner
             // HomePage ActionButton_Click: covers WingetPackage DataContext path
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage ActionButton_Click (pkg)", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -209,6 +214,7 @@ public static class UITestRunner
             // InstalledPage ViewModel_PropertyChanged: IsLoading + FilteredPackages + LastRefreshTimeText
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage ViewModel_PropertyChanged", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -232,6 +238,7 @@ public static class UITestRunner
             // InstalledPage IconService_IconsUpdated
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage IconService_IconsUpdated", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -253,6 +260,7 @@ public static class UITestRunner
             // UpdatesPage ViewModel_PropertyChanged: IsLoading, FilteredUpgrades, progress properties
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage ViewModel_PropertyChanged", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -279,6 +287,7 @@ public static class UITestRunner
             // UpdatesPage IconService_IconsUpdated
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage IconService_IconsUpdated", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -300,6 +309,7 @@ public static class UITestRunner
             // HomePage ViewModel_PropertyChanged: IsLoading, IsSearchActive/FilteredSearchResults, FilteredRecommendations
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage ViewModel_PropertyChanged", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -324,6 +334,7 @@ public static class UITestRunner
             // HomePage IconService_IconsUpdated
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "HomePage IconService_IconsUpdated", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.HomePage hp)
                 {
                     var hpType = typeof(Pages.HomePage);
@@ -497,6 +508,7 @@ public static class UITestRunner
             // ========== InstalledPage ==========
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage loaded & filtered", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     ip.ViewModel.SourceFilter = SourceFilters.All;
@@ -507,6 +519,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage sort headers", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -524,6 +537,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage category buttons", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -539,6 +553,7 @@ public static class UITestRunner
             // InstalledPage ViewTaskLog_Click: covers ShowLogDialogForPackage call
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage ViewTaskLog_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -551,6 +566,7 @@ public static class UITestRunner
             // InstalledPage UninstallSingle_Click: covers Uninstall path
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage UninstallSingle_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -563,6 +579,7 @@ public static class UITestRunner
             // InstalledPage UpdateSingle_Click: covers Upgrade path
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage UpdateSingle_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -575,6 +592,7 @@ public static class UITestRunner
             // InstalledPage BulkUninstallButton_Click: early return with no selected items
             if (await NavigateAndTest(navFrame, typeof(Pages.InstalledPage), "InstalledPage BulkUninstallButton_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.InstalledPage ip)
                 {
                     var ipType = typeof(Pages.InstalledPage);
@@ -640,6 +658,7 @@ public static class UITestRunner
             // ========== UpdatesPage ==========
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage loaded", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     up.ViewModel.SourceFilter = SourceFilters.All;
@@ -650,6 +669,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage sort headers", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -667,6 +687,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage category buttons", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -682,6 +703,7 @@ public static class UITestRunner
             // UpdatesPage ViewTaskLog_Click: covers ShowLogDialogForPackage call
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage ViewTaskLog_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -694,6 +716,7 @@ public static class UITestRunner
             // UpdatesPage UpdateSingle_Click: covers Upgrade path
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage UpdateSingle_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -706,6 +729,7 @@ public static class UITestRunner
             // UpdatesPage BulkUpdateButton_Click: early return with no selected items
             if (await NavigateAndTest(navFrame, typeof(Pages.UpdatesPage), "UpdatesPage BulkUpdateButton_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.UpdatesPage up)
                 {
                     var upType = typeof(Pages.UpdatesPage);
@@ -721,6 +745,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.SettingsPage), "SettingsPage toggle switches", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.SettingsPage sp)
                 {
                     var autoToggle = sp.FindName("AutoUpdateToggle") as ToggleSwitch;
@@ -803,6 +828,7 @@ public static class UITestRunner
             // DetailsPage ActionButton_Click: safe to invoke (fire-and-forget, won't throw)
             if (await NavigateAndTest(navFrame, typeof(Pages.DetailsPage), "DetailsPage ActionButton_Click", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.DetailsPage dp)
                 {
                     var dpType = typeof(Pages.DetailsPage);
@@ -815,6 +841,7 @@ public static class UITestRunner
             // PackageDetailHelper.PopulateMetadata: pure static, needs Panel
             if (await NavigateAndTest(navFrame, typeof(Pages.DetailsPage), "PackageDetailHelper PopulateMetadata", async () =>
             {
+                await Task.Yield();
                 var panel = new StackPanel();
                 var items = new List<MetadataItem>
                 {
@@ -836,6 +863,7 @@ public static class UITestRunner
             // DetailsPage Back button
             if (await NavigateAndTest(navFrame, typeof(Pages.DetailsPage), "DetailsPage Back button", async () =>
             {
+                await Task.Yield();
                 if (navFrame.Content is Pages.DetailsPage dp)
                 {
                     var dpType = typeof(Pages.DetailsPage);
@@ -1015,6 +1043,7 @@ public static class UITestRunner
             // NotifyIconsUpdated: subscribe, invoke via reflection
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "IconService NotifyIconsUpdated", async () =>
             {
+                await Task.Yield();
                 var iconService = IconService.Instance;
                 var iconType = typeof(IconService);
 
@@ -1074,6 +1103,7 @@ public static class UITestRunner
             // ========== MainWindow ==========
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "MainWindow theme toggle", async () =>
             {
+                await Task.Yield();
                 if (App.MainWindow is MainWindow mw)
                 {
                     var mwType = typeof(MainWindow);
@@ -1091,6 +1121,7 @@ public static class UITestRunner
             // UpdateThemeToggleIcon: invoke via reflection
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "MainWindow UpdateThemeToggleIcon", async () =>
             {
+                await Task.Yield();
                 if (App.MainWindow is MainWindow mw)
                 {
                     var mwType = typeof(MainWindow);
@@ -1103,6 +1134,7 @@ public static class UITestRunner
             // ========== SettingsService I/O error path ==========
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "MainWindow UpdateUpdatesBadge", async () =>
             {
+                await Task.Yield();
                 if (App.MainWindow is MainWindow mw)
                 {
                     mw.UpdateUpdatesBadge(0);
@@ -1114,6 +1146,7 @@ public static class UITestRunner
             // ========== SettingsService I/O error path ==========
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "SettingsService I/O error path", async () =>
             {
+                await Task.Yield();
                 try
                 {
                     var ssType = typeof(SettingsService);
@@ -1190,6 +1223,7 @@ public static class UITestRunner
             // TitleBarBackButton_Click: navigate to non-top-level page, invoke back
             if (await NavigateAndTest(navFrame, typeof(Pages.DetailsPage), "MainWindow TitleBarBackButton", async () =>
             {
+                await Task.Yield();
                 if (App.MainWindow is MainWindow mw)
                 {
                     var mwType = typeof(MainWindow);
@@ -1262,6 +1296,7 @@ public static class UITestRunner
 
             if (await NavigateAndTest(navFrame, typeof(Pages.HomePage), "NavView settings navigation", async () =>
             {
+                await Task.Yield();
                 if (App.MainWindow is MainWindow mw && mw.Content is FrameworkElement root)
                 {
                     var navView = root.FindName("NavView") as NavigationView;

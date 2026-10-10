@@ -9,8 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using ViVeToolApp.Services;
 using WingetStore.Models;
 using WingetStore.Services;
+using WingetStore.Services.Optimizer;
 using WingetStore.Testing;
 using WingetStore.ViewModels;
 
@@ -37,7 +39,7 @@ public partial class App : Application
     public static bool Not(bool value) => !value;
     public static Visibility CollapsedIf(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
-    public static ImageSource? ToImageSource(string path)
+    public static ImageSource? ToImageSource(string? path)
     {
         if (string.IsNullOrEmpty(path)) return null;
         try { return new Microsoft.UI.Xaml.Media.Imaging.BitmapImage(new Uri(path)); } catch (Exception ex) { LogService.LogError($"ToImageSource failed for path: {path}", ex); return null; }
@@ -87,10 +89,34 @@ public partial class App : Application
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INotificationService, NotificationService>();
         services.AddSingleton(IconService.Instance);
+
+        // Native System Optimizer services
+        services.AddSingleton<IElevationService, WindowsElevationService>();
+        services.AddSingleton<IRegistryAccessor, WindowsRegistryAccessor>();
+        services.AddSingleton<ICommandExecutor, ProcessCommandExecutor>();
+        services.AddSingleton<IWmiAccessor, WindowsWmiAccessor>();
+        services.AddSingleton<IMemoryNative, WindowsMemoryNative>();
+        services.AddSingleton<IMemoryOptimizerService, MemoryOptimizerService>();
+        services.AddSingleton<IDiskCleanerService, DiskCleanerService>();
+        services.AddSingleton<IOptimizerConfigService, OptimizerConfigService>();
+        services.AddSingleton<ISystemOptimizerService, SystemOptimizerService>();
+        services.AddSingleton<ISystemAuditorService, SystemAuditorService>();
+        services.AddSingleton<ISystemBenchmarkService, SystemBenchmarkService>();
+
+        // Native ViVeTool Feature Velocity services
+        services.AddSingleton<IProcessLauncher, SystemProcessLauncher>();
+        services.AddSingleton<IFeatureFilterService, FeatureFilterService>();
+        services.AddSingleton<IViVeToolLocator, ViVeToolLocator>();
+        services.AddSingleton<IViVeToolRunner, ViVeToolRunner>();
+        services.AddSingleton<IViVeToolDownloader>(_ => new ViVeToolDownloader());
+        services.AddSingleton<IFeatureScraper>(_ => new PureinfotechScraper());
+
         services.AddTransient<InstalledViewModel>();
         services.AddTransient<UpdatesViewModel>();
         services.AddTransient<SearchViewModel>();
         services.AddTransient<HomeViewModel>();
+        services.AddTransient<OptimizerViewModel>();
+        services.AddTransient<FeaturesViewModel>();
         return services.BuildServiceProvider();
     }
 

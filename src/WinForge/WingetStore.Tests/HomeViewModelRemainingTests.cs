@@ -3,9 +3,9 @@ namespace WingetStore.Tests;
 public class HomeViewModelRemainingTests
 {
     [Fact]
-    public async Task OnSourceFilterChanged_CallsApplyFilter()
+    public void OnSourceFilterChanged_CallsApplyFilter()
     {
-        await TestHelper.RunWithDispatcherAsync(async () =>
+        TestHelper.RunWithDispatcher(() =>
         {
             var homeVM = App.Services.GetRequiredService<HomeViewModel>();
             var recField = typeof(HomeViewModel).GetField("_allRecommendations", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;

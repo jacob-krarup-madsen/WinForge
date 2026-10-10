@@ -2,20 +2,44 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = lf
+end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
+indent_size = 4
+
+[*.{json,xaml,xml}]
 indent_size = 2
 
-[*.py]
+[*.cs]
 indent_size = 4
 
-[*.rs]
-indent_size = 4
+# Code style defaults
+csharp_prefer_braces = true:suggestion
+csharp_using_directive_placement = outside_namespace:suggestion
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
 
-[*.{cs,csproj,sln}]
-indent_size = 4
+# Analyzer Severities for Desktop / WinUI Application
+dotnet_diagnostic.CA1001.severity = suggestion
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA1031.severity = none
+dotnet_diagnostic.CA1848.severity = none
+dotnet_diagnostic.CA1062.severity = suggestion
+dotnet_diagnostic.CA1508.severity = suggestion
+dotnet_diagnostic.CA1822.severity = suggestion
 
-[Makefile]
-indent_style = tab
+# Unit & Integration Test Conventions
+[**/*Tests*/**.cs]
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA2201.severity = none
+dotnet_diagnostic.CA1852.severity = none
+dotnet_diagnostic.CA1304.severity = none
+dotnet_diagnostic.CA1305.severity = none
+dotnet_diagnostic.CA1311.severity = none
+dotnet_diagnostic.xUnit1051.severity = none
+

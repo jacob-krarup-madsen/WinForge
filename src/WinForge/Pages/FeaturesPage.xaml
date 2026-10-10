@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:WingetStore.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viveModels="using:ViVeToolApp.Models"
     mc:Ignorable="d">
 
     <Grid Padding="36,24,36,24" RowSpacing="16">
@@ -17,42 +18,73 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Spacing="4">
-            <TextBlock Text="Feature Velocity (ViVeTool)" FontSize="28" FontWeight="SemiBold" />
-            <TextBlock Text="Manage and unlock experimental Windows 11 features and velocity flags." 
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="14" />
-        </StackPanel>
+        <Grid Grid.Row="0" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Feature Velocity (ViVeTool)" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Manage and unlock 118 experimental Windows 11 features and velocity flags across GA, Insider, and Canary tracks."
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="14" TextWrapping="Wrap" />
+            </StackPanel>
+            <Button x:Name="DownloadViVeToolBtn" Grid.Column="1" VerticalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="DownloadViVeToolBtn_Click">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE896;" FontSize="14" />
+                    <TextBlock Text="Download ViVeTool" />
+                </StackPanel>
+            </Button>
+        </Grid>
 
         <!-- Command Toolbar -->
         <Grid Grid.Row="1" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="180" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="SearchBox" PlaceholderText="Search by ID, name, or description..." TextChanged="SearchBox_TextChanged">
+            <TextBox x:Name="SearchBox"
+                     PlaceholderText="Search by ID, track, build, or description..."
+                     Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="SearchBox_TextChanged">
                 <TextBox.Header>
                     <TextBlock Text="Filter Features" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </TextBox.Header>
             </TextBox>
 
-            <Button x:Name="EnableBtn" Grid.Column="1" VerticalAlignment="Bottom" Height="36" Style="{ThemeResource AccentButtonStyle}" Click="EnableBtn_Click">
+            <ComboBox x:Name="GroupFilterBox"
+                      Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom"
+                      ItemsSource="{x:Bind ViewModel.GroupOptions, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.GroupFilter, Mode=TwoWay}">
+                <ComboBox.Header>
+                    <TextBlock Text="Release Track" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </ComboBox.Header>
+            </ComboBox>
+
+            <Button x:Name="EnableBtn" Grid.Column="2" VerticalAlignment="Bottom" Height="36"
+                    Style="{ThemeResource AccentButtonStyle}" IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="EnableBtn_Click">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <FontIcon Glyph="&#xE73E;" FontSize="14" />
                     <TextBlock Text="Enable" />
                 </StackPanel>
             </Button>
 
-            <Button x:Name="DisableBtn" Grid.Column="2" VerticalAlignment="Bottom" Height="36" Click="DisableBtn_Click">
+            <Button x:Name="DisableBtn" Grid.Column="3" VerticalAlignment="Bottom" Height="36"
+                    IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="DisableBtn_Click">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <FontIcon Glyph="&#xE711;" FontSize="14" />
                     <TextBlock Text="Disable" />
                 </StackPanel>
             </Button>
 
-            <Button x:Name="RefreshBtn" Grid.Column="3" VerticalAlignment="Bottom" Height="36" Click="RefreshBtn_Click">
+            <Button x:Name="RefreshBtn" Grid.Column="4" VerticalAlignment="Bottom" Height="36"
+                    IsEnabled="{x:Bind ViewModel.IsIdle, Mode=OneWay}" Click="RefreshBtn_Click">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <FontIcon Glyph="&#xE72C;" FontSize="14" />
                     <TextBlock Text="Refresh" />
@@ -62,26 +94,37 @@
 
         <!-- Features List -->
         <Border Grid.Row="2" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
-            <ListView x:Name="FeaturesListView" SelectionMode="Multiple" SelectionChanged="FeaturesListView_SelectionChanged">
+            <ListView x:Name="FeaturesListView"
+                      ItemsSource="{x:Bind ViewModel.FilteredFeatures, Mode=OneWay}"
+                      SelectionMode="Multiple"
+                      SelectionChanged="FeaturesListView_SelectionChanged">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="viveModels:FeatureItem">
                         <Grid Padding="8,10" ColumnSpacing="16">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="160" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="140" />
                             </Grid.ColumnDefinitions>
 
                             <Border CornerRadius="4" Background="{ThemeResource SubtleFillColorSecondaryBrush}" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Id}" FontFamily="Consolas" FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock Text="{x:Bind IDsDisplay, Mode=OneWay}" FontFamily="Consolas" FontWeight="SemiBold" FontSize="12" TextTrimming="CharacterEllipsis" />
                             </Border>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                                <TextBlock Text="{Binding Name}" FontWeight="Medium" FontSize="14" TextTrimming="CharacterEllipsis" />
-                                <TextBlock Text="{Binding Description}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{x:Bind Description, Mode=OneWay}" FontWeight="Medium" FontSize="14" TextTrimming="CharacterEllipsis" />
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{x:Bind Group, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="·" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind BuildLabel, Mode=OneWay}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </StackPanel>
                             </StackPanel>
 
-                            <TextBlock Grid.Column="2" Text="{Binding StatusText}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Grid.Column="2"
+                                       Text="{x:Bind StatusLabel, Mode=OneWay}"
+                                       ToolTipService.ToolTip="{x:Bind StatusToolTip, Mode=OneWay}"
+                                       VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="12"
+                                       Foreground="{x:Bind StatusBrush, Mode=OneWay}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -89,6 +132,12 @@
         </Border>
 
         <!-- Status / Execution Output InfoBar -->
-        <InfoBar x:Name="StatusInfoBar" Grid.Row="3" IsOpen="False" IsClosable="True" />
+        <InfoBar x:Name="StatusInfoBar"
+                 Grid.Row="3"
+                 IsOpen="{x:Bind ViewModel.IsInfoBarOpen, Mode=TwoWay}"
+                 Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
+                 Title="{x:Bind ViewModel.InfoBarTitle, Mode=OneWay}"
+                 Message="{x:Bind ViewModel.InfoBarMessage, Mode=OneWay}"
+                 IsClosable="True" />
     </Grid>
 </Page>
