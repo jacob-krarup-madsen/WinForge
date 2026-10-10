@@ -48,6 +48,7 @@ public sealed partial class HomePage : Page
 
         RecommendationsGrid.Loaded += RecommendationsGrid_Loaded;
         RecommendationsGrid.SizeChanged += RecommendationsGrid_SizeChanged;
+        DiscoverContentPanel.SizeChanged += RecommendationsGrid_SizeChanged;
         CategoriesGrid.SizeChanged += CategoriesGrid_SizeChanged;
     }
 
@@ -142,7 +143,7 @@ public sealed partial class HomePage : Page
         bool gridRecreated = _lastWrapGrid != wrapGrid;
         _lastWrapGrid = wrapGrid;
 
-        double usableWidth = Math.Max(0, RecommendationsGrid.ActualWidth);
+        double usableWidth = Math.Max(0, DiscoverContentPanel.ActualWidth > 0 ? DiscoverContentPanel.ActualWidth : RecommendationsGrid.ActualWidth);
         GridDimensions dimensions = GridCalculator.CalculateGridDimensions(usableWidth);
 
         if (!ShouldUpdateGridLayout(gridRecreated, dimensions.Columns, _lastColumnCount, dimensions.SlotWidth, _lastSlotWidth, CurrentItemHeight, _lastItemHeight, CurrentCardHeight, _lastCardHeight, dimensions.EffectiveGap, _lastEffectiveGap))
@@ -155,6 +156,7 @@ public sealed partial class HomePage : Page
         _lastEffectiveGap = dimensions.EffectiveGap;
         _lastGridDimensions = dimensions;
 
+        wrapGrid.MaximumRowsOrColumns = dimensions.Columns;
         wrapGrid.ItemWidth = dimensions.SlotWidth;
         wrapGrid.ItemHeight = CurrentItemHeight;
 
@@ -169,6 +171,7 @@ public sealed partial class HomePage : Page
         if (CategoriesGrid.ItemsPanelRoot is not ItemsWrapGrid catWrapGrid) return;
         var dims = _lastGridDimensions;
         if (dims.Columns <= 0 || dims.SlotWidth <= 0) return;
+        catWrapGrid.MaximumRowsOrColumns = dims.Columns;
         catWrapGrid.ItemWidth = dims.SlotWidth;
         catWrapGrid.ItemHeight = 88.0;
     }

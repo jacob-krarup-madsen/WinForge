@@ -13,6 +13,7 @@ public sealed class ResponsivePageContainer : ContentControl
     {
         HorizontalContentAlignment = HorizontalAlignment.Stretch;
         VerticalContentAlignment = VerticalAlignment.Stretch;
+        Padding = GetPadding(ResponsiveBand.Medium);
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
@@ -21,7 +22,10 @@ public sealed class ResponsivePageContainer : ContentControl
     {
         SizeChanged -= OnSizeChanged;
         SizeChanged += OnSizeChanged;
-        UpdatePadding(ActualWidth);
+        if (ActualWidth > 0)
+        {
+            UpdatePadding(ActualWidth);
+        }
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)

@@ -14,7 +14,7 @@ public enum NavigationMode { Desktop, Tablet, Phone }
 public sealed partial class MainWindow : Window
 {
     private double _lastRasterizationScale = double.NaN;
-    private NavigationMode _currentNavigationMode;
+    private NavigationMode? _currentNavigationMode;
 
     private IntPtr _hWnd;
     private SUBCLASSPROC? _subclassProc;
@@ -42,6 +42,9 @@ public sealed partial class MainWindow : Window
 
     [System.Runtime.InteropServices.DllImport("comctl32.dll", SetLastError = true)]
     private static extern IntPtr DefSubclassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern uint GetDpiForWindow(IntPtr hwnd);
 
     private delegate IntPtr SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData);
 
@@ -92,23 +95,35 @@ public sealed partial class MainWindow : Window
         }
         string iconPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Assets", "AppIcon.ico");
         if (System.IO.File.Exists(iconPath)) AppWindow.SetIcon(iconPath);
-        var displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Primary);
-        if (displayArea != null)
-        {
-            int w = 1100, h = 750;
-            AppWindow.MoveAndResize(new RectInt32(displayArea.WorkArea.X + (displayArea.WorkArea.Width - w) / 2, displayArea.WorkArea.Y + (displayArea.WorkArea.Height - h) / 2, w, h));
-        }
 
+        double dpiScale = 1.0;
         try
         {
             _hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             if (_hWnd != IntPtr.Zero)
             {
+                uint dpi = GetDpiForWindow(_hWnd);
+                if (dpi > 0)
+                {
+                    dpiScale = dpi / 96.0;
+                }
                 _subclassProc = new SUBCLASSPROC(WindowSubclassProc);
                 SetWindowSubclass(_hWnd, _subclassProc, (UIntPtr)1, IntPtr.Zero);
             }
         }
         catch { }
+
+        var displayArea = DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Primary);
+        if (displayArea != null)
+        {
+            int w = Math.Min((int)Math.Round(1150 * dpiScale), Math.Max(800, displayArea.WorkArea.Width - 40));
+            int h = Math.Min((int)Math.Round(780 * dpiScale), Math.Max(500, displayArea.WorkArea.Height - 40));
+            AppWindow.MoveAndResize(new RectInt32(
+                displayArea.WorkArea.X + (displayArea.WorkArea.Width - w) / 2,
+                displayArea.WorkArea.Y + (displayArea.WorkArea.Height - h) / 2,
+                w,
+                h));
+        }
 
         SizeChanged += MainWindow_SizeChanged;
         NavView.Loaded += (s, e) =>
@@ -116,9 +131,10 @@ public sealed partial class MainWindow : Window
             if (NavView.SettingsItem is NavigationViewItem settingsItem)
             {
                 settingsItem.Content = "Settings";
-                settingsItem.Margin = new Thickness(0, 0, 0, 64);
+                settingsItem.Margin = new Thickness(0, 0, 0, 4);
             }
-            ApplyNavigationMode(NavView.ActualWidth);
+            double initialWidth = NavView.ActualWidth > 0 ? NavView.ActualWidth : (RootGrid.ActualWidth > 0 ? RootGrid.ActualWidth : 1150);
+            ApplyNavigationMode(initialWidth);
             if (NavFrame.Content == null)
             {
                 var homeItem = NavView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(i => (string)i.Tag == "home");
@@ -166,17 +182,24 @@ public sealed partial class MainWindow : Window
 
     private void ApplyNavigationMode(double width)
     {
+        if (width <= 0 || NavView == null) return;
         NavigationMode mode = GetNavigationMode(width);
-        if (_currentNavigationMode == mode) return;
-        _currentNavigationMode = mode;
-        if (NavView == null) return;
+        var (paneDisplayMode, isFooterVisible, _) = GetNavigationModeLayout(mode);
+        bool shouldBeOpen = mode == NavigationMode.Desktop;
 
-        var (paneDisplayMode, isFooterVisible, settingsMargin) = GetNavigationModeLayout(mode);
+        if (_currentNavigationMode == mode && NavView.PaneDisplayMode == paneDisplayMode && NavView.IsPaneOpen == shouldBeOpen)
+            return;
+
+        _currentNavigationMode = mode;
         NavView.PaneDisplayMode = paneDisplayMode;
+        NavView.IsPaneOpen = shouldBeOpen;
         NavView.IsPaneToggleButtonVisible = mode != NavigationMode.Desktop;
         NavView.PaneFooter = isFooterVisible ? CreatePaneFooter() : null;
         if (NavView.SettingsItem is NavigationViewItem settingsItem)
-            settingsItem.Margin = new Thickness(0, 0, 0, settingsMargin);
+        {
+            settingsItem.Content = "Settings";
+            settingsItem.Margin = new Thickness(0, 0, 0, 4);
+        }
     }
 
     private static Grid CreatePaneFooter() => new Grid

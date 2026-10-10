@@ -89,8 +89,8 @@
     <controls:ResponsivePageContainer>
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel Spacing="12" HorizontalAlignment="Stretch">
-                    <!-- Page Header Section -->
-                    <StackPanel Spacing="12" HorizontalAlignment="Stretch">
+                <!-- Page Header Section -->
+                <StackPanel Spacing="12" HorizontalAlignment="Stretch" Margin="0,0,16,0">
                     <StackPanel Spacing="2">
                         <TextBlock Text="Discover Applications" FontSize="26" FontWeight="Bold" />
                         <TextBlock Text="Browse, install, and manage software through Windows Package Manager" FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
@@ -101,10 +101,12 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBox
                                 x:Name="HomeSearchBox"
+                                Grid.Column="0"
                                 PlaceholderText="Search apps by name, ID, or publisher..."
                                 Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay}"
                                 KeyDown="HomeSearchBox_KeyDown"
@@ -113,22 +115,22 @@
                                 BorderThickness="0"
                                 AutomationProperties.Name="Search applications" />
                             <Rectangle Grid.Column="1" Width="1" Fill="{ThemeResource CardStrokeColorDefaultBrush}" VerticalAlignment="Stretch" />
-                            <Button Grid.Column="1" Content="Search" Click="SearchButton_Click" Height="36" MinWidth="64" CornerRadius="0" AutomationProperties.Name="Search" />
+                            <Button Grid.Column="2" Content="Search" Click="SearchButton_Click" Height="36" MinWidth="72" CornerRadius="0,5,5,0" BorderThickness="0" AutomationProperties.Name="Search" />
                         </Grid>
                     </Border>
                 </StackPanel>
 
                 <!-- Search Helper / State Hint Bar -->
-                <TextBlock x:Name="SearchHintText" Visibility="Collapsed" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,-8" />
+                <TextBlock x:Name="SearchHintText" Visibility="Collapsed" FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,16,-8" />
 
                 <!-- Error Feedback InfoBar -->
-                <InfoBar x:Name="ErrorInfoBar" Title="Notice" Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.IsErrorOpen, Mode=TwoWay}" Severity="Warning" />
+                <InfoBar x:Name="ErrorInfoBar" Title="Notice" Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.IsErrorOpen, Mode=TwoWay}" Severity="Warning" Margin="0,0,16,0" />
 
                 <!-- Loading Indicator -->
                 <ProgressRing x:Name="SearchProgress" IsActive="False" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
 
                 <!-- SEARCH RESULTS SECTION (Shown when Search is Active) -->
-                <StackPanel x:Name="SearchResultsPanel" Spacing="16" Visibility="Collapsed" HorizontalAlignment="Stretch">
+                <StackPanel x:Name="SearchResultsPanel" Spacing="16" Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="0,0,16,0">
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -185,7 +187,7 @@
                 <StackPanel x:Name="DiscoverContentPanel" Spacing="12" Visibility="Visible" HorizontalAlignment="Stretch">
                     <!-- Recommended for You Section -->
                     <StackPanel x:Name="RecommendationsPanel" Spacing="12" Visibility="Visible" HorizontalAlignment="Stretch">
-                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,4,0,4">
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,4,16,4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
@@ -211,11 +213,11 @@
 
                     <!-- Categories Section -->
                     <StackPanel Spacing="12" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Categories" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,4,0,4" />
+                        <TextBlock Text="Categories" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,4,16,4" />
                         <GridView x:Name="CategoriesGrid" ItemContainerStyle="{StaticResource WingetCategoryGridItemStyle}" ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="CategoriesGrid_ItemClick" HorizontalAlignment="Stretch">
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="models:CategoryItem">
-                                    <Border Height="90" Margin="0,0,12,12" CornerRadius="8" Background="{ThemeResource WingetCategoryBackgroundBrush}" BorderBrush="{ThemeResource WingetCategoryBorderBrush}" BorderThickness="1" Translation="0,0,2">
+                                    <Border Height="90" Margin="0,0,16,12" CornerRadius="8" Background="{ThemeResource WingetCategoryBackgroundBrush}" BorderBrush="{ThemeResource WingetCategoryBorderBrush}" BorderThickness="1" Translation="0,0,2">
                                         <StackPanel Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <FontIcon Glyph="{x:Bind IconGlyph}" FontSize="28" Foreground="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" />
                                             <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />

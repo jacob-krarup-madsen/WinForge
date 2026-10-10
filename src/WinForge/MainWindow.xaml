@@ -62,7 +62,12 @@
         <NavigationView
             x:Name="NavView"
             Grid.Row="1"
+            PaneDisplayMode="Left"
+            IsPaneOpen="True"
             OpenPaneLength="220"
+            CompactPaneLength="48"
+            ExpandedModeThresholdWidth="900"
+            CompactModeThresholdWidth="600"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleButtonVisible="False"
             SelectionChanged="NavView_SelectionChanged">
@@ -117,7 +122,7 @@
 
                 <NavigationViewItem Content="Feature Velocity" Tag="features">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE73C;" FontSize="16" />
+                        <FontIcon Glyph="&#xE945;" FontSize="16" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
