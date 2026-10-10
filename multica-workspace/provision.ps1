@@ -186,7 +186,7 @@ function Add-Skills([string]$AgentName, [string[]]$SkillIds) {
   $r = Invoke-Multica -Args (@("agent", "skills", "add", $agentIds[$AgentName], "--skill-ids") + $valid) -AllowFail
   if ($r.Code -ne 0) { Write-Warn2 "skill bind failed for $AgentName. Bind in the UI (agent > Skills). Output:`n$($r.Output)" }
 }
-Add-Skills "winforge-lead" @($conventionsId)
+Add-Skills "winforge-lead" @($conventionsId, $safetyId)
 Add-Skills "winui-mvvm" @($conventionsId)
 Add-Skills "winget-core" @($conventionsId)
 Add-Skills "vive-features" @($conventionsId)
