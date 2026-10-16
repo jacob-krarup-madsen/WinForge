@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "subagent_depth": 2,
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "*": "ask",
+      "dotnet *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git log *": "allow"
+    },
+    "skill": {
+      "*": "allow"
+    }
+  },
+  "agent": {
+    "winforge-orchestrator": {
+      "description": "WinForge orchestrator that plans work and delegates to specialists via Task tool"
+    }
+  }
+}
